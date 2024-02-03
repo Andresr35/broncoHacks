@@ -3,9 +3,7 @@ var express = require("express");
 var path = require("path");
 var cookieParser = require("cookie-parser");
 var logger = require("morgan");
-// const cors = require("cors");
-
-var indexRouter = require("./routes/index");
+const cors = require("cors");
 const apiRouter = require("./api/index");
 
 // Connect to database
@@ -20,14 +18,13 @@ async function main() {
 
 var app = express();
 
-// app.use(cors({ origin:  }));
+app.use(cors({ origin: "http://localhost:5173" }));
 app.use(logger("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 
-app.use("/", indexRouter);
 app.use("/api", apiRouter);
 
 // error handler

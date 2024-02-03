@@ -23,13 +23,7 @@ exports.postClass = asyncHandler(async (req, res, next) => {
     meeting_time,
     meeting_location,
   } = req.body;
-  if (
-    !name ||
-    !description ||
-    !meeting_time ||
-    !meeting_location ||
-    !professor
-  )
+  if (!name || !description || !meeting_time || !meeting_location || !professor)
     res.status(400).json({ status: 400, message: "Missing required fields" });
 
   try {
@@ -78,18 +72,15 @@ exports.updateClass = asyncHandler(async (req, res, next) => {
     !students
   )
     res.status(400).json({ status: 400, message: "Missing required fields" });
-  const updatedClass = await Class.findByIdAndUpdate(
-    req.params._id,
-    {
-      name,
-      description,
-      picture,
-      professor,
-      students,
-      meeting_time,
-      meeting_location,
-    }
-  );
+  const updatedClass = await Class.findByIdAndUpdate(req.params._id, {
+    name,
+    description,
+    picture,
+    professor,
+    students,
+    meeting_time,
+    meeting_location,
+  });
   res.status(201).json({
     status: 201,
     message: "Class Updated",
@@ -119,7 +110,7 @@ exports.getAllStudents = asyncHandler(async (req, res, next) => {
 
 // Return the name and rate my professor link of the professor
 exports.getProfessor = asyncHandler(async (req, res, next) => {
-  const classDocument = await Class.findById(req.params._id).exec();
+  const classDocument = await Class.findById(req.params.id).exec();
   if (!classDocument) {
     return res.status(404).json({
       status: 404,

@@ -1,8 +1,10 @@
 import PropTypes from "prop-types";
 import styles from "../assets/Login.module.css";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const Login = ({ url }) => {
+  const navigate = useNavigate();
   const [login, setLogin] = useState(true);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -17,13 +19,14 @@ const Login = ({ url }) => {
 
   const authenticate = async (e) => {
     e.preventDefault();
-    const logInResults = await fetch(`${url}/api/users/signup`, {
+    const logInResults = await fetch(`${url}/api/users/login`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        ...user,
+        email,
+        password,
       }),
     });
     const resJson = await logInResults.json();
@@ -31,15 +34,35 @@ const Login = ({ url }) => {
       sessionStorage.setItem("token", resJson.token);
       localStorage.setItem("userID", resJson.user._id);
       navigate("/");
-    } else {
-      setUser({ ...user, erorr: resJson.message });
-      //create error with message
     }
   };
 
-  const signUp = (e) => {
+  const signUp = async (e) => {
     e.preventDefault();
+    const signUpRes = await fetch(`${url}/api/users`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        ...signUpData,
+      }),
+    });
+
+    const signUpData = await signUpRes.json();
+    if (signUpData.status == 201) {
+      sessionStorage.setItem("token", signUpData.token);
+      localStorage.setItem("userID", signUpData.user._id);
+      navigate("/");
+    }
   };
+  const checkConfirmationPassword = (e) => {
+    setSignUpData({ ...signUpData, confirmationPassword: e.target.value });
+    if (e.target.value !== signUpData.password)
+      e.target.setCustomValidity("Passwords do not match");
+    else e.target.setCustomValidity("");
+  };
+
   return (
     <main>
       <h1 className={styles.title}>Bronco Life</h1>
@@ -75,7 +98,7 @@ const Login = ({ url }) => {
             <div className={styles.input}>
               <h4>Password</h4>
               <input
-                type="text"
+                type="password"
                 placeholder="Enter Password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
@@ -91,6 +114,17 @@ const Login = ({ url }) => {
         <div className={styles.signInContainer}>
           <h3>Sign Up</h3>
           <form onSubmit={signUp}>
+            <div className={styles.input}>
+              <h4>Name</h4>
+              <input
+                type="text"
+                placeholder="Enter name"
+                value={signUpData.name}
+                onChange={(e) =>
+                  setSignUpData({ ...signUpData, name: e.target.value })
+                }
+              />
+            </div>
             <div className={styles.input}>
               <h4>Email</h4>
               <input
@@ -119,12 +153,7 @@ const Login = ({ url }) => {
                 type="password"
                 placeholder="Confirm Password"
                 value={signUpData.confirmPassword}
-                onChange={(e) =>
-                  setSignUpData({
-                    ...signUpData,
-                    confirmPassword: e.target.value,
-                  })
-                }
+                onChange={checkConfirmationPassword}
               />
             </div>
             <div className={styles.input}>
