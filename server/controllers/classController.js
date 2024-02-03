@@ -1,13 +1,13 @@
 const asyncHandler = require("express-async-handler");
 const mongoose = require("mongoose");
-const Class = require("../models/Class");
+const nClass = require("../models/Class");
 const Event = require("../models/Event");
 const Post = require("../models/Post");
 const { postEvent } = require("./eventController");
 
 // Get all classes that a user is in or all classes with a specific name
 exports.getClasses = asyncHandler(async (req, res, next) => {
-  const classes = await Class.find({
+  const classes = await nClass.find({
     $or: [{ name: req.params.name }, { user: req.params.userID }],
   }).exec();
   return res.status(200).json({ message: "Success", status: 200, classes });
@@ -29,8 +29,7 @@ exports.postClass = asyncHandler(async (req, res, next) => {
       .status(400)
       .json({ status: 400, message: "Missing required fields" });
 
-  try {
-    const newClass = await new Class({
+    const newClass = await new nClass({
       name,
       description,
       picture,
@@ -39,20 +38,13 @@ exports.postClass = asyncHandler(async (req, res, next) => {
       meeting_time,
       meeting_location,
     });
+
     await newClass.save();
     return res.status(201).json({
       status: 201,
       message: "Class Created",
       newClass,
     });
-  } catch (err) {
-    if (err.code === 11000) {
-      return res.status(400).json({
-        status: 400,
-        message: "Duplicate classId",
-      });
-    }
-  }
 });
 
 // Update a class
@@ -77,7 +69,7 @@ exports.updateClass = asyncHandler(async (req, res, next) => {
     return res
       .status(400)
       .json({ status: 400, message: "Missing required fields" });
-  const updatedClass = await Class.findByIdAndUpdate(
+  const updatedClass = await nClass.findByIdAndUpdate(
     req.params.id,
     {
       name,
@@ -99,7 +91,7 @@ exports.updateClass = asyncHandler(async (req, res, next) => {
 
 // Delete a class
 exports.deleteClass = asyncHandler(async (req, res, next) => {
-  const deletedClass = await Class.findByIdAndDelete(req.params.id);
+  const deletedClass = await nClass.findByIdAndDelete(req.params.id);
   return res.status(201).json({
     status: 201,
     message: "Class Deleted",
@@ -109,7 +101,7 @@ exports.deleteClass = asyncHandler(async (req, res, next) => {
 
 // Get all students in a class
 exports.getAllStudents = asyncHandler(async (req, res, next) => {
-  const students = await Class.findById(req.params.id).students;
+  const students = await nClass.findById(req.params.id).students;
   return res.status(200).json({
     status: 200,
     message: "Success",
@@ -119,7 +111,7 @@ exports.getAllStudents = asyncHandler(async (req, res, next) => {
 
 // Return the name and rate my professor link of the professor
 exports.getProfessor = asyncHandler(async (req, res, next) => {
-  const classDocument = await Class.findById(req.params.id).exec();
+  const classDocument = await nClass.findById(req.params.id).exec();
   if (!classDocument) {
     return res.status(404).json({
       status: 404,
@@ -144,7 +136,7 @@ exports.getProfessor = asyncHandler(async (req, res, next) => {
 
 // Populate the study session events of a class
 exports.getStudySessions = asyncHandler(async (req, res, next) => {
-  const studySessions = await Class.findOne({ classId: req.body.classId })
+  const studySessions = await nClass.findById(req.params.id)
     .events.populate("studySessions")
     .exec();
   return res.status(200).json({
@@ -158,7 +150,7 @@ exports.getStudySessions = asyncHandler(async (req, res, next) => {
 // Add an study session event to a class
 exports.addStudySession = asyncHandler(async (req, res, next) => {
   var newEvent = postEvent(req.body, res, next);
-  const _class = await Class.findOne({ classId: req.body.classId }).exec();
+  const _class = await nClass.findOne({ classId: req.body.classId }).exec();
   _class.events.push(newEvent);
   await _class.save();
   return res.status(201).json({
@@ -171,7 +163,7 @@ exports.addStudySession = asyncHandler(async (req, res, next) => {
 // Update a study session event (eventController will handle the actual event update)
 // Delete a study session event
 exports.deleteStudySession = asyncHandler(async (req, res, next) => {
-  const _class = await Class.findOne({ classId: req.body.classId }).exec();
+  const _class = await nClass.findOne({ classId: req.body.classId }).exec();
   _class.events = _class.events.filter(
     (event) => event._id != req.params.eventID
   ); // Remove the event from the class
@@ -186,7 +178,7 @@ exports.deleteStudySession = asyncHandler(async (req, res, next) => {
 
 // Get all events in a class
 exports.getEvents = asyncHandler(async (req, res, next) => {
-  const event = await Class.findOne(req.params.id).exec();
+  const event = await nClass.findOne(req.params.id).exec();
   if (!event)
     return res.status(400).json({ status: 400, message: "Class not found" });
   else var events = event.events;
@@ -199,7 +191,7 @@ exports.getEvents = asyncHandler(async (req, res, next) => {
 
 // Post an event to a class
 exports.addPost = asyncHandler(async (req, res, next) => {
-  const _class = await Class.findOne(req.params.id).exec();
+  const _class = await nClass.findOne(req.params.id).exec();
   if (!_class)
     return res.status(400).json({ status: 400, message: "Class not found" });
   else {
@@ -223,7 +215,7 @@ exports.addPost = asyncHandler(async (req, res, next) => {
 
 // Get all posts in a class
 exports.getPosts = asyncHandler(async (req, res, next) => {
-  const _class = await Class.findOne( req.params.id ).exec();
+  const _class = await nClass.findOne( req.params.id ).exec();
   if (!_class) return res.status(400).json({ status: 400, message: "Class not found" });
   else {
     var posts = _class.posts;
