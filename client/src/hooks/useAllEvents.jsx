@@ -1,26 +1,26 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-const useAllPosts = (url) => {
+const useAllEvents = (url) => {
   const navigate = useNavigate();
-  const [posts, setPosts] = useState([]);
+  const [events, setEvents] = useState([]);
 
   useEffect(() => {
     const fetchClubs = async () => {
-      const res = await fetch(`${url}/api/posts`, {
+      const res = await fetch(`${url}/api/event`, {
         headers: {
           Authorization: `Bearer ${sessionStorage.getItem("token")}`,
         },
       });
       if (res.status == 200) {
         const data = await res.json();
-        setPosts(data.posts);
+        setEvents(data.events);
       } else if (res.status == 401) {
         navigate("/login");
       }
     };
     fetchClubs();
   }, []);
-  return { posts, setPosts };
+  return { events, setEvents };
 };
 
-export default useAllPosts;
+export default useAllEvents;
