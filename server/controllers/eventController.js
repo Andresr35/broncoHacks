@@ -7,10 +7,12 @@ const mongoose = require('mongoose');
 exports.postEvent = asyncHandler(async (req, res, next) => {
     const { name, description, type, picture, meeting_time, meeting_location } = req.body;
     console.log(req.body);
-    if (!name || !description || !meeting_time || !meeting_location || !type)
+    if (!name || !description || !meeting_time || !meeting_location || !type) {
         return res
             .status(400)
             .json({ status: 400, message: 'Missing required fields' });
+    }
+
     const newEvent = await new Event({
         name,
         description,
@@ -19,6 +21,7 @@ exports.postEvent = asyncHandler(async (req, res, next) => {
         meeting_time,
         meeting_location,
     });
+
     await newEvent.save();
     res.status(201).json({
         status: 201,
@@ -27,6 +30,7 @@ exports.postEvent = asyncHandler(async (req, res, next) => {
     });
 });
 
+
 // Update an event
 exports.updateEvent = asyncHandler(async (req, res, next) => {
     const { name, description, type, picture, meeting_time, meeting_location } = req.body;
@@ -34,20 +38,27 @@ exports.updateEvent = asyncHandler(async (req, res, next) => {
         return res
             .status(400)
             .json({ status: 400, message: 'Missing required fields' });
-    const updatedEvent = await Event.findOne({id : req.params.id}, {
-        name,
-        description,
-        type,
-        picture,
-        meeting_time,
-        meeting_location,
-    });
+
+    const updatedEvent = await Event.findOneAndUpdate(
+        { _id: req.params.id },
+        {
+            name,
+            description,
+            type,
+            picture,
+            meeting_time,
+            meeting_location,
+        },
+        { new: true } // To return the updated document
+    );
+
     res.status(201).json({
         status: 201,
         message: 'Event Updated',
         updatedEvent,
     });
 });
+
 
 // Delete an event
 exports.deleteEvent = asyncHandler(async (req, res, next) => {
