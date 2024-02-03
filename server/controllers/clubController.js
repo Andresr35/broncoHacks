@@ -7,7 +7,7 @@ const mongoose = require("mongoose");
 // Get all clubs that a user is in or all clubs with a specific name
 exports.getClubs = asyncHandler(async (req, res, next) => {
   const clubs = await Club.find({
-    $or: [{ name: req.params.name }, { user: req.params.userID }],
+    $or: [{ members : req.params.members.userID }, { admins: req.params.admins.userID }],
   }).exec();
   return res.status(200).json({ message: "Success", status: 200, clubs });
 });
@@ -30,7 +30,7 @@ exports.postClub = asyncHandler(async (req, res, next) => {
       name,
       description,
       picture,
-      admins: [req.user._id],
+      admins: [req.userID],
       meeting_times,
       meeting_location,
     });
