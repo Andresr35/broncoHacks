@@ -4,6 +4,7 @@ import styles from "../assets/ClassProfile.module.css";
 import Like from "../assets/svg/Like";
 import Comment from "../assets/svg/Comment";
 import Post from "../components/Post";
+import Navbar from "../components/Navbar";
 
 const ClassProfile = ({ url }) => {
   const [classProfile, setClassProfile] = useState({
@@ -26,9 +27,23 @@ const ClassProfile = ({ url }) => {
           author: "",
         },
       },
+      {
+        author: "name",
+        timestamp: "timestamp",
+        message: "This is a test message for a post",
+        title: "Test Post",
+        likes: [],
+        comments: {
+          message: "",
+          timestamp: "",
+          author: "",
+        },
+      },
     ],
   });
+
   const [active, setActive] = useState("posts");
+
   return (
     <main className={styles.classProfile}>
       <h2>{classProfile.name}</h2>
@@ -66,6 +81,7 @@ const ClassProfile = ({ url }) => {
             ))
           : null}
       </div>
+      <Navbar />
     </main>
   );
 };
