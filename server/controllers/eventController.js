@@ -5,9 +5,9 @@ const mongoose = require('mongoose');
 
 // Create a new event
 exports.postEvent = asyncHandler(async (req, res, next) => {
-    const { name, description, type, picture, time, location } = req.body;
+    const { name, description, type, picture, meeting_time, meeting_location } = req.body;
     console.log(req.body);
-    if (!name || !description || !time || !location || !type)
+    if (!name || !description || !meeting_time || !meeting_location || !type)
         return res
             .status(400)
             .json({ status: 400, message: 'Missing required fields' });
@@ -16,8 +16,8 @@ exports.postEvent = asyncHandler(async (req, res, next) => {
         description,
         type,
         picture,
-        time,
-        location,
+        meeting_time,
+        meeting_location,
     });
     await newEvent.save();
     res.status(201).json({
@@ -29,8 +29,8 @@ exports.postEvent = asyncHandler(async (req, res, next) => {
 
 // Update an event
 exports.updateEvent = asyncHandler(async (req, res, next) => {
-    const { name, description, type, picture, time, location } = req.body;
-    if (!name || !description || !time || !location || !type)
+    const { name, description, type, picture, meeting_time, meeting_location } = req.body;
+    if (!name || !description || !meeting_time || !meeting_location || !type)
         return res
             .status(400)
             .json({ status: 400, message: 'Missing required fields' });
@@ -39,8 +39,8 @@ exports.updateEvent = asyncHandler(async (req, res, next) => {
         description,
         type,
         picture,
-        time,
-        location,
+        meeting_time,
+        meeting_location,
     });
     res.status(201).json({
         status: 201,

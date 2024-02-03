@@ -44,7 +44,7 @@ async function testModel() {
     body: {
       name: 'Test Event',
       description: 'Test Description',
-      type: Study,
+      type: "Study",
       attendees: [user._id],
       picture: 'Test Picture',
       meeting_time: new Date(),
@@ -52,18 +52,11 @@ async function testModel() {
     },
   });
   const res = httpMocks.createResponse();
+  const next = null;
   await postEvent(req, res, next);
   console.log(res._getData());
-  console.log(user);
 
-  await user.save();
   console.log("finished");
 }
 
 testModel()
-  .then((res) => {
-    console.log(res);
-  })
-  .catch((err) => {
-    console.log(err);
-  });
