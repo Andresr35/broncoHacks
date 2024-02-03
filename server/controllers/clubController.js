@@ -269,3 +269,10 @@ exports.postClubPost = asyncHandler(async (req, res, next) => {
     });
   }
 });
+
+
+// Get all clubs
+exports.getClubs = asyncHandler(async (req, res, next) => {
+  const clubs = await Club.find().exec();
+  return res.status(200).json({ message: "Success", status: 200, clubs });
+});

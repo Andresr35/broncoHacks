@@ -100,6 +100,8 @@ exports.getUserPosts = asyncHandler(async (req, res, next) => {
   });
 });
 
+
+
 // Friend requested gets friend request. If friend request exists already, it is taken away.
 //  if they are friends already, send back a message back
 exports.postFriendRequest = asyncHandler(async (req, res, next) => {
@@ -153,6 +155,7 @@ exports.postFriendRequest = asyncHandler(async (req, res, next) => {
 exports.putFriendRequest = asyncHandler(async (req, res, next) => {
   const { friendID } = req.params;
   const { userID, accepted } = req.body;
+  console.log(friendID, userID, accepted);
   if (!userID)
     return res.status(400).json({
       message: "UserID was not provided",
