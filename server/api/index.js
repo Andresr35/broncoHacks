@@ -8,9 +8,9 @@ router.get("/", (req, res, next) => {
   res.send("Welcome to serene Book API!");
 });
 
-router.use("/users", userRouter);
+// router.use("/users", userRouter);
 
-router.use(authenticateToken);
-router.use("/posts", postRouter);
+// router.use(authenticateToken);
+// router.use("/posts", postRouter);
 
 module.exports = router;
