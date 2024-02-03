@@ -1,0 +1,27 @@
+.event {
+  width: 280px;
+  background-color: var(--background);
+  margin: 0 auto;
+  border-radius: 15px;
+  padding-bottom: 15px;
+  box-sizing: border-box;
+  margin-top: 10px;
+}
+.event h4 {
+  font-weight: 400;
+  padding-left: 10px;
+  padding-bottom: 10px;
+  margin: 0;
+}
+.description {
+  width: 220px;
+  margin: 0 auto;
+  margin-bottom: 10px;
+}
+.timestamp,
+.timestamp + div {
+  text-align: right;
+  margin: 0;
+  margin-right: 15px;
+  font-size: 0.75rem;
+}

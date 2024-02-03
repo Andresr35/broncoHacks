@@ -3,6 +3,7 @@ import Navbar from "../components/Navbar";
 import { useState } from "react";
 import styles from "../assets/SchoolPage.module.css";
 import Post from "../components/Post";
+import Event from "../components/Event";
 
 const SchoolPage = ({ url }) => {
   const [active, setActive] = useState("posts");
@@ -52,6 +53,113 @@ const SchoolPage = ({ url }) => {
       },
     ],
   });
+  const [events, setEvents] = useState([
+    {
+      name: "Rocket Launch",
+      description:
+        "We are going to be launching our first rocket! It is going to be super exciting so do not miss it!",
+      picture: "",
+      type: {
+        Study: 0,
+        School: 1,
+        Club: 2,
+        ASI: 3,
+        Personal: 4,
+      },
+      attendees: [], // List of User Objects
+      posts: [],
+      meeting_time: " 5am",
+      meeting_location: " Friends of Amauetry",
+    },
+    {
+      name: "Rocket Launch",
+      description:
+        "We are going to be launching our first rocket! It is going to be super exciting so do not miss it!",
+      picture: "",
+      type: {
+        Study: 0,
+        School: 1,
+        Club: 2,
+        ASI: 3,
+        Personal: 4,
+      },
+      attendees: [], // List of User Objects
+      posts: [],
+      meeting_time: " 5am",
+      meeting_location: " Friends of Amauetry",
+    },
+    {
+      name: "Rocket Launch",
+      description:
+        "We are going to be launching our first rocket! It is going to be super exciting so do not miss it!",
+      picture: "",
+      type: {
+        Study: 0,
+        School: 1,
+        Club: 2,
+        ASI: 3,
+        Personal: 4,
+      },
+      attendees: [], // List of User Objects
+      posts: [],
+      meeting_time: " 5am",
+      meeting_location: " Friends of Amauetry",
+    },
+  ]);
+  const [clubs, setClubs] = useState([
+    {
+      name: "Rocket Launch",
+      description:
+        "We are going to be launching our first rocket! It is going to be super exciting so do not miss it!",
+      picture: "",
+      type: {
+        Study: 0,
+        School: 1,
+        Club: 2,
+        ASI: 3,
+        Personal: 4,
+      },
+      attendees: [], // List of User Objects
+      posts: [],
+      meeting_time: " 5am",
+      meeting_location: " Friends of Amauetry",
+    },
+    {
+      name: "Rocket Launch",
+      description:
+        "We are going to be launching our first rocket! It is going to be super exciting so do not miss it!",
+      picture: "",
+      type: {
+        Study: 0,
+        School: 1,
+        Club: 2,
+        ASI: 3,
+        Personal: 4,
+      },
+      attendees: [], // List of User Objects
+      posts: [],
+      meeting_time: " 5am",
+      meeting_location: " Friends of Amauetry",
+    },
+    {
+      name: "Rocket Launch",
+      description:
+        "We are going to be launching our first rocket! It is going to be super exciting so do not miss it!",
+      picture: "",
+      type: {
+        Study: 0,
+        School: 1,
+        Club: 2,
+        ASI: 3,
+        Personal: 4,
+      },
+      attendees: [], // List of User Objects
+      posts: [],
+      meeting_time: " 5am",
+      meeting_location: " Friends of Amauetry",
+    },
+  ]);
+
   return (
     <main>
       <h1 className={styles.h1}>Bronco School</h1>
@@ -79,6 +187,16 @@ const SchoolPage = ({ url }) => {
         {active == "posts"
           ? home.posts.map((post, index) => (
               <Post post={post} key={index} url={url} setNewPost={() => {}} />
+            ))
+          : null}
+        {active == "clubs"
+          ? clubs.map((club, index) => (
+              <Event event={club} key={index} url={url} />
+            ))
+          : null}
+        {active == "events"
+          ? events.map((event, index) => (
+              <Event event={event} key={index} url={url} />
             ))
           : null}
       </div>

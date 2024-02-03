@@ -6,7 +6,7 @@ import Book from "../assets/svg/Book";
 
 const Navbar = (props) => {
   return (
-    <nav>
+    <nav className={styles.nav}>
       <Link to={"/"}>
         <Home />
       </Link>

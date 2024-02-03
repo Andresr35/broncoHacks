@@ -3,6 +3,7 @@ import styles from "../assets/ClubProfile.module.css";
 import { useState } from "react";
 import Post from "../components/Post";
 import Navbar from "../components/Navbar";
+import Event from "../components/Event";
 
 const ClubProfile = ({ url }) => {
   const [clubProfile, setClubProfile] = useState({
@@ -39,6 +40,25 @@ const ClubProfile = ({ url }) => {
     ],
     members: [],
   });
+  const [events, setEvents] = useState([
+    {
+      name: "Rocket Launch",
+      description:
+        "We are going to be launching our first rocket! It is going to be super exciting so do not miss it!",
+      picture: "",
+      type: {
+        Study: 0,
+        School: 1,
+        Club: 2,
+        ASI: 3,
+        Personal: 4,
+      },
+      attendees: [], // List of User Objects
+      posts: [],
+      meeting_time: " 5am",
+      meeting_location: " Friends of Amauetry",
+    },
+  ]);
   const [active, setActive] = useState("posts");
 
   return (
@@ -74,6 +94,11 @@ const ClubProfile = ({ url }) => {
         {active == "posts"
           ? clubProfile.posts.map((post, index) => (
               <Post post={post} key={index} url={url} setNewPost={() => {}} />
+            ))
+          : null}
+        {active == "events"
+          ? events.map((event, index) => (
+              <Event event={event} key={index} url={url} />
             ))
           : null}
       </div>

@@ -3,6 +3,7 @@ import { useState } from "react";
 import styles from "../assets/Home.module.css";
 import Navbar from "../components/Navbar";
 import Post from "../components/Post";
+import Event from "../components/Event";
 
 const Home = ({ url }) => {
   const [active, setActive] = useState("posts");
@@ -52,6 +53,59 @@ const Home = ({ url }) => {
       },
     ],
   });
+  const [events, setEvents] = useState([
+    {
+      name: "Rocket Launch",
+      description:
+        "We are going to be launching our first rocket! It is going to be super exciting so do not miss it!",
+      picture: "",
+      type: {
+        Study: 0,
+        School: 1,
+        Club: 2,
+        ASI: 3,
+        Personal: 4,
+      },
+      attendees: [], // List of User Objects
+      posts: [],
+      meeting_time: " 5am",
+      meeting_location: " Friends of Amauetry",
+    },
+    {
+      name: "Rocket Launch",
+      description:
+        "We are going to be launching our first rocket! It is going to be super exciting so do not miss it!",
+      picture: "",
+      type: {
+        Study: 0,
+        School: 1,
+        Club: 2,
+        ASI: 3,
+        Personal: 4,
+      },
+      attendees: [], // List of User Objects
+      posts: [],
+      meeting_time: " 5am",
+      meeting_location: " Friends of Amauetry",
+    },
+    {
+      name: "Rocket Launch",
+      description:
+        "We are going to be launching our first rocket! It is going to be super exciting so do not miss it!",
+      picture: "",
+      type: {
+        Study: 0,
+        School: 1,
+        Club: 2,
+        ASI: 3,
+        Personal: 4,
+      },
+      attendees: [], // List of User Objects
+      posts: [],
+      meeting_time: " 5am",
+      meeting_location: " Friends of Amauetry",
+    },
+  ]);
 
   return (
     <main>
@@ -74,6 +128,11 @@ const Home = ({ url }) => {
         {active == "posts"
           ? home.posts.map((post, index) => (
               <Post post={post} key={index} url={url} setNewPost={() => {}} />
+            ))
+          : null}
+        {active == "events"
+          ? events.map((event, index) => (
+              <Event event={event} key={index} url={url} />
             ))
           : null}
       </div>
