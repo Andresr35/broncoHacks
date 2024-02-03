@@ -5,6 +5,7 @@ import styles from "../assets/SchoolPage.module.css";
 import Post from "../components/Post";
 import Event from "../components/Event";
 import useAllEvents from "../hooks/useAllEvents";
+import useAllPosts from "../hooks/useAllPosts";
 const SchoolPage = ({ url }) => {
   const [active, setActive] = useState("posts");
   const [home, setHome] = useState({
@@ -53,6 +54,7 @@ const SchoolPage = ({ url }) => {
       },
     ],
   });
+  const { posts } = useAllPosts(url);
   // const [events, setEvents] = useState([
   //   {
   //     name: "Rocket Launch",
