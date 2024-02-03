@@ -253,3 +253,9 @@ exports.rateUser = asyncHandler(async (req, res, next) => {
     user,
   });
 });
+
+
+function calculateRating(currentRating, newRating) {
+  return (currentRating * totalRatings + newRating) / (totalRatings + 1);
+
+}

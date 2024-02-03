@@ -73,7 +73,7 @@ exports.deleteEvent = asyncHandler(async (req, res, next) => {
 exports.getEvent = asyncHandler(async (req, res, next) => {
     const { type } = req.params;
     const events = await Event.find({
-        $and: [{ type: type }, { attendees: { $in: [req.params.userId] } }]
+        $and: [{ type: type }, { attendees: { $in: [req.params.userID] } }]
     }).exec();
     res.status(200).json({
         status: 200,
