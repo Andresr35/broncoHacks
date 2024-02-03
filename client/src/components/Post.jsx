@@ -18,7 +18,6 @@ const Post = ({ post, setNewPost, url }) => {
   const [deletePostError, setDeletePostError] = useState("");
   const [openComments, setOpenComments] = useState(false);
   const handleComment = () => setOpenComments(!openComments);
-  const authenticated = localStorage.getItem("userID") == post.author._id;
 
   const addComment = async (e) => {
     e.preventDefault();
@@ -96,9 +95,9 @@ const Post = ({ post, setNewPost, url }) => {
           )} */}
         </div>
         <div>
-          <p className={styles.timestamp}>{post.timestamp}</p>
+          <p className={styles.timestamp}>{post.date}</p>
           {/* <Link to={post.author.url} className={styles.author}> */}
-          <div>{post.author}</div>
+          <div>{post.author.name}</div>
           {/* <img
               style={{ width: "50px", borderRadius: "100%" }}
               src={post.author.picture}
