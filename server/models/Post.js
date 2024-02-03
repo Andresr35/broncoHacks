@@ -1,72 +1,43 @@
-const mongoose = require("mongoose");
-const Schema = mongoose.Schema;
+const AWS = require('aws-sdk');
+const { v4: uuidv4 } = require('uuid');
 const { DateTime } = require("luxon");
 
-const PostSchema = new Schema({
-  author: {
-    type: Schema.Types.ObjectId,
-    ref: "User",
-    required: true,
-  },
-  timestamp: {
-    type: Date,
-    default: Date.now,
-  },
-  message: {
-    type: String,
-    required: true,
-    trim: true,
-  },
-  title: {
-    type: String,
-    required: true,
-    trim: true,
-  },
-  likes: [
-    {
-      author: {
-        type: Schema.Types.ObjectId,
-        ref: "User",
-        required: true,
-      },
-    },
-  ],
-  comments: [
-    {
-      message: {
-        type: String,
-        required: true,
-        trim: true,
-      },
-      timestamp: {
-        type: Date,
-        default: Date.now(),
-      },
-      author: {
-        type: Schema.Types.ObjectId,
-        ref: "User",
-        required: true,
-      },
-    },
-  ],
+AWS.config.update({
+  region: 'us-west-2', // replace with your AWS region
+  accessKeyId: 'your-access-key-id',
+  secretAccessKey: 'your-secret-access-key',
 });
 
-PostSchema.virtual("date").get(function () {
-  return DateTime.fromJSDate(this.timestamp).toLocaleString(
-    DateTime.DATE_SHORT
-  );
-});
-PostSchema.path("comments")
-  .schema.virtual("date")
-  .get(function () {
-    return DateTime.fromJSDate(this.timestamp).toLocaleString(
-      DateTime.DATE_SHORT
-    );
-  });
-PostSchema.path("comments").schema.set("toObject", { virtuals: true });
-PostSchema.path("comments").schema.set("toJSON", { virtuals: true });
-PostSchema.set("toObject", { virtuals: true });
-PostSchema.set("toJSON", { virtuals: true });
+const dynamoDB = new AWS.DynamoDB.DocumentClient();
 
-module.exports = mongoose.model("Post", PostSchema);
+const TableName = 'your-dynamodb-table-name';
 
+const createPost = async (authorId, message, title) => {
+  const timestamp = new Date();
+  const postId = uuidv4();
+
+  const params = {
+    TableName,
+    Item: {
+      postId,
+      authorId,
+      timestamp: timestamp.toISOString(),
+      message,
+      title,
+      likes: [], // DynamoDB doesn't require defining an empty array
+      comments: [], // DynamoDB doesn't require defining an empty array
+    },
+  };
+
+  try {
+    await dynamoDB.put(params).promise();
+    return postId;
+  } catch (error) {
+    console.error(error);
+    throw new Error('Failed to create post');
+  }
+};
+
+module.exports = {
+  createPost,
+};
