@@ -2,12 +2,18 @@ const User = require("./models/User");
 const Club = require("./models/Club");
 const Event = require("./models/Event");
 const Post = require("./models/Post");
+const Class = require("./models/Class");
 const httpMocks = require("node-mocks-http");
-const { getClasses, postClass, getProfessor } = require("./controllers/classController");
+const {
+  getClasses,
+  postClass,
+  getProfessor,
+} = require("./controllers/classController");
 const mongoose = require("mongoose");
 
 mongoose.set("strictQuery", false);
-const mongoDB = "mongodb+srv://vinhph003:passworde@cluster0.zdxrkke.mongodb.net/?retryWrites=true&w=majority";
+const mongoDB =
+  "mongodb+srv://vinhph003:passworde@cluster0.zdxrkke.mongodb.net/?retryWrites=true&w=majority";
 main().catch((err) => console.log(err));
 async function main() {
   await mongoose.connect(mongoDB);
@@ -26,7 +32,7 @@ async function testModel() {
     friends: [],
     ratings: 5,
     tags: ["student"],
-    picture: "example.com"
+    picture: "example.com",
   });
 
   // const event = new Event({
@@ -39,19 +45,20 @@ async function testModel() {
   //   meeting_time: "10:00am",
   //   meeting_location: "library"
   // });
+  const new_class = new Class({
+    name: "CS2400",
+    description: "Data Structures and Algorithms",
+    professor: "Thanh Nguyen",
+    students: [user._id],
+    picture: "Test Picture",
+    meeting_time: new Date(),
+    meeting_location: "Bldg 3 RM 204",
+  });
 
   const req = httpMocks.createRequest({
-    body: {
-      classId: '123',
-      name: 'CS2400',
-      description: 'Data Structures and Algorithms',
-      professor: 'Thanh Nguyen',
-      students: [user._id],
-      picture: 'Test Picture',
-      meeting_time: new Date(),
-      meeting_location: "Bldg 3 RM 204"
-    },
+    body: new_class.toObject(),
   });
+
   const res = httpMocks.createResponse();
   const next = null;
   await postClass(req, res, next);
@@ -73,8 +80,7 @@ async function testModel() {
   await getProfessor(req, res, next);
   console.log(res._getData());
 
-
   console.log("finished");
 }
 
-testModel()
+testModel();

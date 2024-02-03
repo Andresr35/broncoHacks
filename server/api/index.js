@@ -13,10 +13,10 @@ router.get("/", (req, res, next) => {
 
 router.use("/users", userRouter);
 
-router.use(authenticateToken);
-router.use("/posts", postRouter);
 router.use("/class", classRouter);
 router.use("/event", eventRouter);
 router.use("/club", clubRouter);
+router.use(authenticateToken);
+router.use("/posts", postRouter);
 
 module.exports = router;

@@ -16,7 +16,6 @@ exports.getClasses = asyncHandler(async (req, res, next) => {
 exports.postClass = asyncHandler(async (req, res, next) => {
   const {
     name,
-    classId,
     description,
     picture,
     professor,
@@ -26,7 +25,6 @@ exports.postClass = asyncHandler(async (req, res, next) => {
   } = req.body;
   if (
     !name ||
-    !classId ||
     !description ||
     !meeting_time ||
     !meeting_location ||
@@ -36,7 +34,6 @@ exports.postClass = asyncHandler(async (req, res, next) => {
 
   try {
     const newClass = await new Class({
-      classId,
       name,
       description,
       picture,
@@ -81,8 +78,8 @@ exports.updateClass = asyncHandler(async (req, res, next) => {
     !students
   )
     res.status(400).json({ status: 400, message: "Missing required fields" });
-  const updatedClass = await Class.findOneAndUpdate(
-    { classId: req.body.classId },
+  const updatedClass = await Class.findByIdAndUpdate(
+    req.params._id,
     {
       name,
       description,
@@ -102,9 +99,7 @@ exports.updateClass = asyncHandler(async (req, res, next) => {
 
 // Delete a class
 exports.deleteClass = asyncHandler(async (req, res, next) => {
-  const deletedClass = await Class.findOneAndDelete({
-    classId: req.body.classId,
-  });
+  const deletedClass = await Class.findByIdAndDelete(req.params._id);
   res.status(201).json({
     status: 201,
     message: "Class Deleted",
@@ -114,7 +109,7 @@ exports.deleteClass = asyncHandler(async (req, res, next) => {
 
 // Get all students in a class
 exports.getAllStudents = asyncHandler(async (req, res, next) => {
-  const students = await Class.findOne({ classId: req.body.classId }).students;
+  const students = await Class.findById(req.params._id).students;
   res.status(200).json({
     status: 200,
     message: "Success",
@@ -124,9 +119,7 @@ exports.getAllStudents = asyncHandler(async (req, res, next) => {
 
 // Return the name and rate my professor link of the professor
 exports.getProfessor = asyncHandler(async (req, res, next) => {
-  const classDocument = await Class.findOne({
-    classId: req.body.classId,
-  }).exec();
+  const classDocument = await Class.findById(req.params._id).exec();
   if (!classDocument) {
     return res.status(404).json({
       status: 404,

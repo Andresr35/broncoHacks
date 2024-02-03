@@ -18,3 +18,5 @@ router.get("/:userID", getAllEvents);
 router.post("/:userID", joinEvent);
 router.get("/:eventID/attendees", getEventAttendees);
 router.delete("/:userID", leaveEvent);
+
+module.exports = router;

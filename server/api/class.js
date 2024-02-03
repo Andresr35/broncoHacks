@@ -16,10 +16,10 @@ const {
     router.post("/", postClass);
     router.put("/", updateClass);
     router.delete("/", deleteClass);
-    router.get("/:classId/students", getAllStudents);
-    router.get("/:classId/professor", getProfessor);
-    router.get("/:classId/studySessions", getStudySessions);
-    router.post("/:classId/studySessions", addStudySession);
-    router.delete("/:classId/studySessions", deleteStudySession);
+    router.get("/:id/students", getAllStudents);
+    router.get("/:id/professor", getProfessor);
+    router.get("/:id/studySessions", getStudySessions);
+    router.post("/:id/studySessions", addStudySession);
+    router.delete("/:id/studySessions", deleteStudySession);
   
   module.exports = router;

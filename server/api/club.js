@@ -19,9 +19,14 @@ const {
     router.post("/", postClub);
     router.put("/", updateClub);
     router.delete("/", deleteClub);
-    router.get("/:clubId/members", getClubMembers);
-    router.get("/:clubId/admins", getClubAdmins);
-    router.get("/:clubId/posts", getClubPosts);
-    router.get("/:clubId/events", getClubEvents);
+    router.post("/:id/:userID", addUserToClub);
+    router.delete("/:id/:userID", removeUserFromClub);
+    router.post("/:id/:userID", addAdminToClub);
+    router.delete("/:id/:userID", removeAdminFromClub);
+    router.get("/:id/admins", getAdmins);
+    router.get("/:id/members", getClubMembers);
+    router.get("/:id/events", getClubEvents);
+    router.get("/:id/posts", getClubPosts);
+        
   
   module.exports = router;

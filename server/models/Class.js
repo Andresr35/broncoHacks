@@ -2,7 +2,6 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 const ClassSchema = new Schema({
-    classId: { type: String, required: true, unique: true, trim: true }, 
     name: { type: String, required: true, trim: true },
     description: { type: String, required: true, trim: true },
     professor: { type: String, required: true, trim: true }, // TODO: Link professor name to rate my professor
