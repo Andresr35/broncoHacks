@@ -49,13 +49,14 @@ const Login = ({ url }) => {
       }),
     });
 
-    const signUpData = await signUpRes.json();
-    if (signUpData.status == 201) {
-      sessionStorage.setItem("token", signUpData.token);
-      localStorage.setItem("userID", signUpData.user._id);
+    const signData = await signUpRes.json();
+    if (signData.status == 201) {
+      sessionStorage.setItem("token", signData.token);
+      localStorage.setItem("userID", signData.user._id);
       navigate("/");
     }
   };
+
   const checkConfirmationPassword = (e) => {
     setSignUpData({ ...signUpData, confirmationPassword: e.target.value });
     if (e.target.value !== signUpData.password)
