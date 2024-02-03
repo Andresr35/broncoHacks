@@ -23,7 +23,9 @@ exports.postClub = asyncHandler(async (req, res, next) => {
     meeting_location,
   } = req.body;
   if (!name || !clubId || !description || !meeting_times || !meeting_location)
-    res.status(400).json({ status: 400, message: "Missing required fields" });
+    return res
+      .status(400)
+      .json({ status: 400, message: "Missing required fields" });
   try {
     const newClub = await new Club({
       clubId,
@@ -35,7 +37,7 @@ exports.postClub = asyncHandler(async (req, res, next) => {
       meeting_location,
     });
     await newClub.save();
-    res.status(201).json({
+    return res.status(201).json({
       status: 201,
       message: "Club Created",
       newClub,
@@ -52,35 +54,27 @@ exports.postClub = asyncHandler(async (req, res, next) => {
 
 // Update a club
 exports.updateClub = asyncHandler(async (req, res, next) => {
-  const {
-    name,
-    clubId,
-    description,
-    picture,
-    meeting_times,
-    meeting_location,
-  } = req.body;
-  if (!name || !clubId || !description || !meeting_times || !meeting_location)
-    res.status(400).json({ status: 400, message: "Missing required fields" });
+  const { name, description, picture, meeting_times, meeting_location } =
+    req.body;
+  if (!name || !description || !meeting_times || !meeting_location)
+    return res
+      .status(400)
+      .json({ status: 400, message: "Missing required fields" });
   const admin = await Club.find({ admin: req.params.admins }).exec();
   if (!admin)
-    res.status(401).json({
+    return res.status(401).json({
       status: 401,
       message: "You must be an admin to update this club",
     });
   else {
-    const updatedClub = await Club.findOneAndUpdate(
-      { clubId: res.params.clubId },
-      {
-        clubId,
-        name,
-        description,
-        picture,
-        meeting_times,
-        meeting_location,
-      }
-    );
-    res.status(201).json({
+    const updatedClub = await Club.findByIdAndUpdate(req.params._id, {
+      name,
+      description,
+      picture,
+      meeting_times,
+      meeting_location,
+    });
+    return res.status(201).json({
       status: 201,
       message: "Club Updated",
       updatedClub,
@@ -92,13 +86,13 @@ exports.updateClub = asyncHandler(async (req, res, next) => {
 exports.deleteClub = asyncHandler(async (req, res, next) => {
   const admin = await Club.find({ admin: req.params.admins }).exec();
   if (!admin)
-    res.status(401).json({
+    return res.status(401).json({
       status: 401,
       message: "You must be an admin to delete this club",
     });
   else {
     const deletedClub = await Club.findByIdAndDelete(req.params.clubID);
-    res.status(201).json({
+    return res.status(201).json({
       status: 201,
       message: "Club Deleted",
       deletedClub,
@@ -109,11 +103,11 @@ exports.deleteClub = asyncHandler(async (req, res, next) => {
 // Add a user to a club
 exports.addUserToClub = asyncHandler(async (req, res, next) => {
   const club = await Club.findById(req.params.clubID).exec();
-  if (!club) res.status(400).json({ status: 400, message: "Club not found" });
+  if (!club) return res.status(400).json({ status: 400, message: "Club not found" });
   else {
     club.members.push(req.params.userID);
     await club.save();
-    res.status(201).json({
+    return res.status(201).json({
       status: 201,
       message: "User Added to Club",
       club,
@@ -124,11 +118,11 @@ exports.addUserToClub = asyncHandler(async (req, res, next) => {
 // Remove a user from a club
 exports.removeUserFromClub = asyncHandler(async (req, res, next) => {
   const club = await Club.findById(req.params.clubID).exec();
-  if (!club) res.status(400).json({ status: 400, message: "Club not found" });
+  if (!club) return res.status(400).json({ status: 400, message: "Club not found" });
   else {
     club.members.pull(req.params.userID);
     await club.save();
-    res.status(201).json({
+    return res.status(201).json({
       status: 201,
       message: "User Removed from Club",
       club,
@@ -139,11 +133,11 @@ exports.removeUserFromClub = asyncHandler(async (req, res, next) => {
 // Add an admin to a club
 exports.addAdminToClub = asyncHandler(async (req, res, next) => {
   const club = await Club.findById(req.params.clubID).exec();
-  if (!club) res.status(400).json({ status: 400, message: "Club not found" });
+  if (!club) return res.status(400).json({ status: 400, message: "Club not found" });
   else {
     club.admins.push(req.params.userID);
     await club.save();
-    res.status(201).json({
+    return res.status(201).json({
       status: 201,
       message: "Admin Added to Club",
       club,
@@ -154,11 +148,11 @@ exports.addAdminToClub = asyncHandler(async (req, res, next) => {
 // Remove an admin from a club
 exports.removeAdminFromClub = asyncHandler(async (req, res, next) => {
   const club = await Club.findById(req.params.clubID).exec();
-  if (!club) res.status(400).json({ status: 400, message: "Club not found" });
+  if (!club) return res.status(400).json({ status: 400, message: "Club not found" });
   else {
     club.admins.pull(req.params.userID);
     await club.save();
-    res.status(201).json({
+    return res.status(201).json({
       status: 201,
       message: "Admin Removed from Club",
       club,
@@ -169,10 +163,10 @@ exports.removeAdminFromClub = asyncHandler(async (req, res, next) => {
 // Get all admins in a club
 exports.getAdmins = asyncHandler(async (req, res, next) => {
   const club = await Club.findById(req.params.clubID).exec();
-  if (!club) res.status(400).json({ status: 400, message: "Club not found" });
+  if (!club) return res.status(400).json({ status: 400, message: "Club not found" });
   else {
     const admins = await club.admins;
-    res.status(200).json({
+    return res.status(200).json({
       status: 200,
       message: "Success",
       admins,
@@ -183,10 +177,10 @@ exports.getAdmins = asyncHandler(async (req, res, next) => {
 // Get all members in a club
 exports.getClubMembers = asyncHandler(async (req, res, next) => {
   const club = await Club.findById(req.params.clubID).exec();
-  if (!club) res.status(400).json({ status: 400, message: "Club not found" });
+  if (!club) return res.status(400).json({ status: 400, message: "Club not found" });
   else {
     const members = await club.members;
-    res.status(200).json({
+    return res.status(200).json({
       status: 200,
       message: "Success",
       members,
@@ -194,16 +188,15 @@ exports.getClubMembers = asyncHandler(async (req, res, next) => {
   }
 });
 
-
 // Editing / Deleting Event and Post we will let Post and Event handle their own controllers
 
 // Get all events in a club
 exports.getClubEvents = asyncHandler(async (req, res, next) => {
   const club = await Club.findOne({ clubId: req.params.clubId }).exec();
-  if (!club) res.status(400).json({ status: 400, message: "Club not found" });
+  if (!club) return res.status(400).json({ status: 400, message: "Club not found" });
   else {
     const events = club.events;
-    res.status(200).json({
+    return res.status(200).json({
       status: 200,
       message: "Success",
       events,
@@ -213,7 +206,7 @@ exports.getClubEvents = asyncHandler(async (req, res, next) => {
 
 exports.postClubEvent = asyncHandler(async (req, res, next) => {
   const club = await Club.findOne({ _id: req.params.id }).exec();
-  if (!club) res.status(400).json({ status: 400, message: "Club not found" });
+  if (!club) return res.status(400).json({ status: 400, message: "Club not found" });
   else {
     const newEvent = await new Event({
       name: req.body.title,
@@ -226,7 +219,7 @@ exports.postClubEvent = asyncHandler(async (req, res, next) => {
     await newEvent.save();
     club.events.push(newEvent._id);
     await club.save();
-    res.status(201).json({
+    return res.status(201).json({
       status: 201,
       message: "Event Created",
       newEvent,
@@ -237,10 +230,10 @@ exports.postClubEvent = asyncHandler(async (req, res, next) => {
 // Get all posts in a club
 exports.getClubPosts = asyncHandler(async (req, res, next) => {
   const club = await Club.findOne({ clubId: req.params.clubId }).exec();
-  if (!club) res.status(400).json({ status: 400, message: "Club not found" });
+  if (!club) return res.status(400).json({ status: 400, message: "Club not found" });
   else {
     const posts = club.posts;
-    res.status(200).json({
+    return res.status(200).json({
       status: 200,
       message: "Success",
       posts,
@@ -251,7 +244,7 @@ exports.getClubPosts = asyncHandler(async (req, res, next) => {
 // Create a post in a club
 exports.postClubPost = asyncHandler(async (req, res, next) => {
   const club = await Club.findOne({ clubId: req.params.clubId }).exec();
-  if (!club) res.status(400).json({ status: 400, message: "Club not found" });
+  if (!club) return res.status(400).json({ status: 400, message: "Club not found" });
   else {
     const newPost = await new Post({
       title: req.body.title,
@@ -263,7 +256,7 @@ exports.postClubPost = asyncHandler(async (req, res, next) => {
     await newPost.save();
     club.posts.push(newPost._id);
     await club.save();
-    res.status(201).json({
+    return res.status(201).json({
       status: 201,
       message: "Post Created",
       newPost,
