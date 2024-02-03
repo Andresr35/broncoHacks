@@ -65,7 +65,8 @@
   font-weight: 500;
   color: var(--background);
 }
-.input input {
+.input input,
+.input select {
   box-sizing: border-box;
   background-color: var(--background);
   width: 100%;
@@ -80,11 +81,11 @@
   top: 20%;
   left: 0;
   right: 0;
-  bottom: 0;
   margin: auto;
   border-radius: 25px;
   width: 256px;
   height: auto;
+  padding-bottom: 20px;
 }
 .button {
   background-color: var(--primary);
@@ -95,6 +96,6 @@
   background-color: var(--secondary);
 }
 .signInContainer .input {
-  margin: 10px auto;
+  margin: 5px auto;
   width: 144px;
 }

@@ -6,9 +6,20 @@ const Login = (props) => {
   const [login, setLogin] = useState(true);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [signUpData, setSignUpData] = useState({ email: "" });
+  const [signUpData, setSignUpData] = useState({
+    email: "",
+    password: "",
+    confirmationPassword: "",
+    age: 0,
+    gender: "",
+    bio: "",
+  });
 
   const authenticate = (e) => {
+    e.preventDefault();
+  };
+
+  const signUp = (e) => {
     e.preventDefault();
   };
   return (
@@ -33,7 +44,7 @@ const Login = (props) => {
       {login && (
         <div className={styles.loginContainer}>
           <h3>Log In</h3>
-          <form onSubmit={(e) => authenticate(e)}>
+          <form onSubmit={authenticate}>
             <div className={styles.input}>
               <h4>Email</h4>
               <input
@@ -61,7 +72,7 @@ const Login = (props) => {
       {!login && (
         <div className={styles.signInContainer}>
           <h3>Sign Up</h3>
-          <form>
+          <form onSubmit={signUp}>
             <div className={styles.input}>
               <h4>Email</h4>
               <input
@@ -76,37 +87,65 @@ const Login = (props) => {
             <div className={styles.input}>
               <h4>Password</h4>
               <input
-                type="text"
+                type="password"
                 placeholder="Enter Password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
+                value={signUpData.password}
+                onChange={(e) =>
+                  setSignUpData({ ...signUpData, password: e.target.value })
+                }
               />
             </div>
             <div className={styles.input}>
               <h4>Confirm Password</h4>
               <input
-                type="text"
-                placeholder="Enter Password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
+                type="password"
+                placeholder="Confirm Password"
+                value={signUpData.confirmPassword}
+                onChange={(e) =>
+                  setSignUpData({
+                    ...signUpData,
+                    confirmPassword: e.target.value,
+                  })
+                }
               />
             </div>
             <div className={styles.input}>
-              <h4>Password</h4>
+              <h4>Age</h4>
               <input
-                type="text"
-                placeholder="Enter Password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
+                type="number"
+                placeholder="Enter Age"
+                value={signUpData.age}
+                onChange={(e) =>
+                  setSignUpData({ ...signUpData, age: e.target.value })
+                }
               />
             </div>
             <div className={styles.input}>
-              <h4>Password</h4>
+              <h4>Gender</h4>
+              <select
+                name="gender"
+                defaultValue="select"
+                onChange={(e) =>
+                  setSignUpData({ ...signUpData, gender: e.target.value })
+                }
+              >
+                <option value="select" disabled>
+                  Select
+                </option>
+                <option value="male">male</option>
+                <option value="female">female</option>
+                <option value="other">other</option>
+              </select>
+            </div>
+            <div className={styles.input}>
+              <h4>Bio</h4>
               <input
                 type="text"
-                placeholder="Enter Password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
+                placeholder="Enter Bio"
+                value={signUpData.bio}
+                onChange={(e) =>
+                  setSignUpData({ ...signUpData, bio: e.target.value })
+                }
               />
             </div>
             <button className={styles.button} type="submit">
