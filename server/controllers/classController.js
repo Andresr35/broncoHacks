@@ -5,7 +5,7 @@ const Class = require("../models/Class");
 // Get all classes that a user is in or all classes with a specific name
 exports.getClasses = asyncHandler(async (req, res, next) => {
     const classes = await Class.find({
-        $or: [{ name: req.params.name}, { user: req.params.userID}]
+        $or: [{ name: req.params.name }, { user: req.params.userID }]
     }).exec();
     return res.status(200).json({ message: "Success", status: 200, classes });
 });
@@ -18,13 +18,13 @@ exports.postClass = asyncHandler(async (req, res, next) => {
             .status(400)
             .json({ status: 400, message: "Missing required fields" });
     const newClass = await new
-    Class({
-        name,
-        description,
-        picture,
-        meeting_times,
-        meeting_location
-    });
+        Class({
+            name,
+            description,
+            picture,
+            meeting_times,
+            meeting_location
+        });
     await newClass.save();
     res.status(201).json({
         status: 201,
@@ -75,7 +75,7 @@ exports.getAllStudents = asyncHandler(async (req, res, next) => {
 });
 
 // Return the name and rate my professor link of the professor
-exports.getProfessor = asyncHandler(async (req, res, next) => {    
+exports.getProfessor = asyncHandler(async (req, res, next) => {
     const professorInfo = {
         name: await Class.findById(req.params.classID).professor,
         link: `https://www.ratemyprofessors.com/search/professors?q=${professor.replace(" ", "+").toLowerCase()}`
