@@ -77,15 +77,18 @@ exports.updateClass = asyncHandler(async (req, res, next) => {
     return res
       .status(400)
       .json({ status: 400, message: "Missing required fields" });
-  const updatedClass = await Class.findByIdAndUpdate(req.params.id, {
-    name,
-    description,
-    picture,
-    professor,
-    students,
-    meeting_time,
-    meeting_location,
-  }, {new: true} // Return the updated document
+  const updatedClass = await Class.findByIdAndUpdate(
+    req.params.id,
+    {
+      name,
+      description,
+      picture,
+      professor,
+      students,
+      meeting_time,
+      meeting_location,
+    },
+    { new: true } // Return the updated document
   );
   return res.status(201).json({
     status: 201,
@@ -93,7 +96,6 @@ exports.updateClass = asyncHandler(async (req, res, next) => {
     updatedClass,
   });
 });
-
 
 // Delete a class
 exports.deleteClass = asyncHandler(async (req, res, next) => {
@@ -184,10 +186,10 @@ exports.deleteStudySession = asyncHandler(async (req, res, next) => {
 
 // Get all events in a class
 exports.getEvents = asyncHandler(async (req, res, next) => {
-  const event = await Class.findOne( req.params.id ).exec();
-  if (!event) return res.status(400).json({ status: 400, message: "Class not found" });
-  else 
-  var events = event.events;
+  const event = await Class.findOne(req.params.id).exec();
+  if (!event)
+    return res.status(400).json({ status: 400, message: "Class not found" });
+  else var events = event.events;
   return res.status(200).json({
     status: 200,
     message: "Success",
@@ -197,8 +199,9 @@ exports.getEvents = asyncHandler(async (req, res, next) => {
 
 // Post an event to a class
 exports.addPost = asyncHandler(async (req, res, next) => {
-  const _class = await Class.findOne( req.params.id ).exec();
-  if (!_class) return res.status(400).json({ status: 400, message: "Class not found" });
+  const _class = await Class.findOne(req.params.id).exec();
+  if (!_class)
+    return res.status(400).json({ status: 400, message: "Class not found" });
   else {
     const new_post = await new Post({
       author: req.body.author,
