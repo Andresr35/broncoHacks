@@ -12,11 +12,10 @@ router.get("/", (req, res, next) => {
 });
 
 router.use("/users", userRouter);
-
+router.use(authenticateToken);
 router.use("/class", classRouter);
 router.use("/event", eventRouter);
-router.use("/club", clubRouter);
-router.use(authenticateToken);
+router.use("/clubs", clubRouter);
 router.use("/posts", postRouter);
 
 module.exports = router;
