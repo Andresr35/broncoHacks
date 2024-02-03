@@ -2,7 +2,7 @@ import PropTypes from "prop-types";
 import styles from "../assets/Login.module.css";
 import { useState } from "react";
 
-const Login = (props) => {
+const Login = ({ url }) => {
   const [login, setLogin] = useState(true);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -15,8 +15,26 @@ const Login = (props) => {
     bio: "",
   });
 
-  const authenticate = (e) => {
+  const authenticate = async (e) => {
     e.preventDefault();
+    const logInResults = await fetch(`${url}/api/users/signup`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        ...user,
+      }),
+    });
+    const resJson = await logInResults.json();
+    if (resJson.status == 200) {
+      sessionStorage.setItem("token", resJson.token);
+      localStorage.setItem("userID", resJson.user._id);
+      navigate("/");
+    } else {
+      setUser({ ...user, erorr: resJson.message });
+      //create error with message
+    }
   };
 
   const signUp = (e) => {
