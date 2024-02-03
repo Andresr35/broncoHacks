@@ -6,6 +6,7 @@ import Post from "../components/Post";
 import Event from "../components/Event";
 import useAllEvents from "../hooks/useAllEvents";
 import useAllPosts from "../hooks/useAllPosts";
+import useAllClubs from "../hooks/useAllClubs";
 const SchoolPage = ({ url }) => {
   const [active, setActive] = useState("posts");
   const [home, setHome] = useState({
@@ -109,59 +110,60 @@ const SchoolPage = ({ url }) => {
   //   },
   // ]);
   const { events } = useAllEvents(url);
-  const [clubs, setClubs] = useState([
-    {
-      name: "Rocket Launch",
-      description:
-        "We are going to be launching our first rocket! It is going to be super exciting so do not miss it!",
-      picture: "",
-      type: {
-        Study: 0,
-        School: 1,
-        Club: 2,
-        ASI: 3,
-        Personal: 4,
-      },
-      attendees: [], // List of User Objects
-      posts: [],
-      meeting_time: " 5am",
-      meeting_location: " Friends of Amauetry",
-    },
-    {
-      name: "Rocket Launch",
-      description:
-        "We are going to be launching our first rocket! It is going to be super exciting so do not miss it!",
-      picture: "",
-      type: {
-        Study: 0,
-        School: 1,
-        Club: 2,
-        ASI: 3,
-        Personal: 4,
-      },
-      attendees: [], // List of User Objects
-      posts: [],
-      meeting_time: " 5am",
-      meeting_location: " Friends of Amauetry",
-    },
-    {
-      name: "Rocket Launch",
-      description:
-        "We are going to be launching our first rocket! It is going to be super exciting so do not miss it!",
-      picture: "",
-      type: {
-        Study: 0,
-        School: 1,
-        Club: 2,
-        ASI: 3,
-        Personal: 4,
-      },
-      attendees: [], // List of User Objects
-      posts: [],
-      meeting_time: " 5am",
-      meeting_location: " Friends of Amauetry",
-    },
-  ]);
+  // const [clubs, setClubs] = useState([
+  //   {
+  //     name: "Rocket Launch",
+  //     description:
+  //       "We are going to be launching our first rocket! It is going to be super exciting so do not miss it!",
+  //     picture: "",
+  //     type: {
+  //       Study: 0,
+  //       School: 1,
+  //       Club: 2,
+  //       ASI: 3,
+  //       Personal: 4,
+  //     },
+  //     attendees: [], // List of User Objects
+  //     posts: [],
+  //     meeting_time: " 5am",
+  //     meeting_location: " Friends of Amauetry",
+  //   },
+  //   {
+  //     name: "Rocket Launch",
+  //     description:
+  //       "We are going to be launching our first rocket! It is going to be super exciting so do not miss it!",
+  //     picture: "",
+  //     type: {
+  //       Study: 0,
+  //       School: 1,
+  //       Club: 2,
+  //       ASI: 3,
+  //       Personal: 4,
+  //     },
+  //     attendees: [], // List of User Objects
+  //     posts: [],
+  //     meeting_time: " 5am",
+  //     meeting_location: " Friends of Amauetry",
+  //   },
+  //   {
+  //     name: "Rocket Launch",
+  //     description:
+  //       "We are going to be launching our first rocket! It is going to be super exciting so do not miss it!",
+  //     picture: "",
+  //     type: {
+  //       Study: 0,
+  //       School: 1,
+  //       Club: 2,
+  //       ASI: 3,
+  //       Personal: 4,
+  //     },
+  //     attendees: [], // List of User Objects
+  //     posts: [],
+  //     meeting_time: " 5am",
+  //     meeting_location: " Friends of Amauetry",
+  //   },
+  // ]);
+  const { clubs } = useAllClubs(url);
 
   return (
     <main>
@@ -188,7 +190,7 @@ const SchoolPage = ({ url }) => {
           </div>
         </div>
         {active == "posts"
-          ? home.posts.map((post, index) => (
+          ? posts.map((post, index) => (
               <Post post={post} key={index} url={url} setNewPost={() => {}} />
             ))
           : null}

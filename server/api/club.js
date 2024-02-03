@@ -14,9 +14,11 @@ const {
   getClubMembers,
   getClubEvents,
   getClubPosts,
+  getAllClubs,
 } = require("../controllers/clubController");
 
 router.get("/:userID", getClubs);
+router.get("/", getAllClubs);
 router.post("/", postClub);
 router.put("/", updateClub);
 router.delete("/", deleteClub);
