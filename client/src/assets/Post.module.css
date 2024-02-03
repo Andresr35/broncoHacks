@@ -1,0 +1,46 @@
+.likes svg {
+  width: 30px;
+  height: 30px;
+}
+.icon svg {
+  width: 30px;
+  height: 30px;
+}
+.icon {
+  padding: 0;
+  background-color: transparent;
+  display: inline-block;
+  margin-left: 20px;
+}
+.post {
+  background-color: var(--background);
+  width: 280px;
+  margin: 10px auto;
+  border-radius: 15px;
+}
+.post h4 {
+  font-weight: 400;
+  margin: 0;
+  margin-left: 16px;
+}
+.message {
+  margin: 0 auto;
+  margin-bottom: 40px;
+  margin-top: 10px;
+  width: 220px;
+  height: auto;
+  font-weight: 200;
+}
+.like {
+  margin-left: 20px;
+}
+.postData {
+  display: flex;
+  justify-content: space-between;
+}
+.timestamp,
+.timestamp + div {
+  margin: 0;
+  margin-right: 15px;
+  font-size: 0.75rem;
+}

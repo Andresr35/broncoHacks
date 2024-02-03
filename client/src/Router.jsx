@@ -17,7 +17,7 @@ const Router = () => {
     { path: "/", element: <Home url={url} /> },
     { path: "/login", element: <Login url={url} /> },
     { path: "/profile/:profileID", element: <UserProfile url={url} /> },
-    { path: "/profile/:profileID", element: <ClassProfile url={url} /> },
+    { path: "/class/:profileID", element: <ClassProfile url={url} /> },
     { path: "/profile/:profileID", element: <SchoolPage url={url} /> },
     { path: "/profile/:profileID", element: <ClubProfile url={url} /> },
   ]);
