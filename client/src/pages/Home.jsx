@@ -5,6 +5,7 @@ import Navbar from "../components/Navbar";
 import Post from "../components/Post";
 import Event from "../components/Event";
 import useUserClubs from "../hooks/useUserClubs";
+import useUserPosts from "../hooks/useUserPosts";
 
 const Home = ({ url }) => {
   const [active, setActive] = useState("posts");
@@ -62,9 +63,8 @@ const Home = ({ url }) => {
       meeting_location: " Friends of Amauetry",
     },
   ]);
-  const { userClubs } = useUserClubs(url);
-  const home = userClubs;
-
+  const { userClubs } = useUserClubs(url, localStorage.getItem("userID"));
+  const { userPosts } = useUserPosts(url, localStorage.getItem("userID"), true);
   return (
     <main>
       <h1 className={styles.h1}>Bronco Life</h1>
@@ -83,13 +83,13 @@ const Home = ({ url }) => {
             Events
           </div>
         </div>
-        {/* {active == "posts"
-          ? home.posts.map((post, index) => (
+        {active == "posts"
+          ? userPosts.map((post, index) => (
               <Post post={post} key={index} url={url} setNewPost={() => {}} />
             ))
-          : null} */}
+          : null}
         {active == "events"
-          ? events.map((event, index) => (
+          ? userClubs.map((event, index) => (
               <Event event={event} key={index} url={url} />
             ))
           : null}

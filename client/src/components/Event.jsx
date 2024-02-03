@@ -7,7 +7,7 @@ const Event = ({ url, event }) => {
       <p className={styles.description}>{event.description}</p>
       <div className={styles.eventData}>
         <div>
-          <p className={styles.timestamp}>{event.meeting_time}</p>
+          <p className={styles.timestamp}>{event.meeting_times}</p>
           <div>{event.meeting_location}</div>
         </div>
       </div>

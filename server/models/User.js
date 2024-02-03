@@ -10,14 +10,14 @@ const UserSchema = new Schema({
   bio: { type: String, trim: true, maxLength: 100 },
   friendRequests: [{ type: Schema.Types.ObjectId, ref: "User" }],
   friends: [{ type: Schema.Types.ObjectId, ref: "User" }],
-  ratings: { type: Number, required: true, default: 0, min: 0, max: 5},
+  ratings: { type: Number, required: true, default: 0, min: 0, max: 5 },
   tags: [{ type: String, trim: true }],
   picture: {
     type: String,
   },
 });
 UserSchema.virtual("url").get(function () {
-  return `/profile/${this._id}`;
+  return `/user/${this._id}`;
 });
 UserSchema.set("toObject", { virtuals: true });
 UserSchema.set("toJSON", { virtuals: true });

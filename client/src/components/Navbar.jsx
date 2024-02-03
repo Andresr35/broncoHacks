@@ -13,7 +13,7 @@ const Navbar = (props) => {
       <Link to={"/school"}>
         <Book />
       </Link>
-      <Link to={"/user/123"}>
+      <Link to={`/user/${localStorage.getItem("userID")}`}>
         <div className={styles.profile}></div>
       </Link>
     </nav>
