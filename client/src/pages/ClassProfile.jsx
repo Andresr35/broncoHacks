@@ -31,11 +31,13 @@ const ClassProfile = ({ url }) => {
   const [active, setActive] = useState("posts");
   return (
     <main className={styles.classProfile}>
-      <h3>{classProfile.name}</h3>
-      <p>{classProfile.description}</p>
-      <p>{classProfile.professor}</p>
-      <p>{classProfile.meeting_time}</p>
-      <p>{classProfile.meeting_location}</p>
+      <h2>{classProfile.name}</h2>
+      <p className={styles.description}>{classProfile.description}</p>
+      <div className={styles.classInfo}>
+        <p>{classProfile.professor}</p>
+        <p>{classProfile.meeting_time}</p>
+        <p>{classProfile.meeting_location}</p>
+      </div>
 
       <div className={styles.container}>
         <div className={styles.classNav}>
