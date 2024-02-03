@@ -5,6 +5,7 @@ const {
   handleLike,
   deletePost,
   addPost,
+  getAllPosts,
 } = require("../controllers/postController");
 const router = express.Router();
 router.post("/", addPost);
