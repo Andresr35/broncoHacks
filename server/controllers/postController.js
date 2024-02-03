@@ -184,3 +184,13 @@ exports.addPost = asyncHandler(async (req, res, next) => {
     newPost: newPost,
   });
 });
+
+// Get all posts
+exports.getPosts = asyncHandler(async (req, res, next) => {
+  const posts = await Post.find().exec();
+  res.status(200).json({
+    status: 200,
+    message: "Success",
+    posts,
+  });
+});
