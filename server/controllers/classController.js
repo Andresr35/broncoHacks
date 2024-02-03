@@ -215,3 +215,4 @@ exports.addPost = asyncHandler(async (req, res, next) => {
       newEvent,
     });
   }
+});
