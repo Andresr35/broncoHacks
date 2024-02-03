@@ -9,7 +9,7 @@ const mongoDB = "mongodb+srv://vinhph003:passworde@cluster0.zdxrkke.mongodb.net/
 main().catch((err) => console.log(err));
 async function main() {
   await mongoose.connect(mongoDB);
-  console.log("connected");
+  console.log("connected 2");
 }
 
 // Get all classes that a user is in or all classes with a specific name
@@ -90,8 +90,7 @@ exports.getAllStudents = asyncHandler(async (req, res, next) => {
 
 // Return the name and rate my professor link of the professor
 exports.getProfessor = asyncHandler(async (req, res, next) => {
-    console.log("Body ID " + req._id);
-    const classDocument = await Class.findById({ _id : res._id }).exec();
+    const classDocument = await Class.findOne({ name: req.body.name }).exec();
     if (!classDocument) {
         return res.status(404).json({
             status: 404,
@@ -102,7 +101,7 @@ exports.getProfessor = asyncHandler(async (req, res, next) => {
     const professor = classDocument.professor;
     const professorInfo = {
         name: professor,
-        link: `https://www.ratemyprofessors.com/search/professors?q=${professor.replace(" ", "+").toLowerCase()}`
+        link: `https://www.ratemyprofessors.com/search/professors/14774?q=${professor.replace(" ", "+").toLowerCase()}`
     }
 
     res.status(200).json({

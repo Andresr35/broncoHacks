@@ -52,23 +52,22 @@ async function testModel() {
     },
   });
   const res = httpMocks.createResponse();
-  console.log(res._getData());
   const next = null;
   await postClass(req, res, next);
-  const req2 = httpMocks.createRequest({
-    body: {
-      name: 'CS2640',
-      description: 'Computer Organization and Assembly Language Programming',
-      professor: 'Thanh Nguyen',
-      students: [user._id],
-      picture: 'Test Picture',
-      meeting_time: new Date(),
-      meeting_location: "Bldg 8 RM 304"
-    },
-  });
-  const res2 = httpMocks.createResponse();
-  const next2 = null;
-  await postClass(req2, res2, next2);
+  // const req2 = httpMocks.createRequest({
+  //   body: {
+  //     name: 'CS2640',
+  //     description: 'Computer Organization and Assembly Language Programming',
+  //     professor: 'Thanh Nguyen',
+  //     students: [user._id],
+  //     picture: 'Test Picture',
+  //     meeting_time: new Date(),
+  //     meeting_location: "Bldg 8 RM 304"
+  //   },
+  // });
+  // const res2 = httpMocks.createResponse();
+  // const next2 = null;
+  // await postClass(req2, res2, next2);
 
   await getProfessor(req, res, next);
   console.log(res._getData());
