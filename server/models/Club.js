@@ -2,7 +2,6 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 const ClubSchema = new Schema({
-    clubId: { type: String, required: true, unique: true, trim: true }, 
     name: { type: String, required: true, trim: true },
     description: { type: String, required: true, trim: true },
     members: [{ type: Schema.Types.ObjectId, ref: "User" }],

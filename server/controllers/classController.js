@@ -2,6 +2,7 @@ const asyncHandler = require("express-async-handler");
 const mongoose = require("mongoose");
 const Class = require("../models/Class");
 const Event = require("../models/Event");
+const Post = require("../models/Post");
 const { postEvent } = require("./eventController");
 
 // Get all classes that a user is in or all classes with a specific name
@@ -23,11 +24,10 @@ exports.postClass = asyncHandler(async (req, res, next) => {
     meeting_time,
     meeting_location,
   } = req.body;
-
-  // added HERE VINNIE
-  if (!name || !description || !meeting_time || !meeting_location || !professor) {
-    return res.status(400).json({ status: 400, message: "Missing required fields" });
-  }
+  if (!name || !description || !meeting_time || !meeting_location || !professor)
+    return res
+      .status(400)
+      .json({ status: 400, message: "Missing required fields" });
 
   try {
     const newClass = await new Class({
@@ -40,7 +40,7 @@ exports.postClass = asyncHandler(async (req, res, next) => {
       meeting_location,
     });
     await newClass.save();
-    res.status(201).json({
+    return res.status(201).json({
       status: 201,
       message: "Class Created",
       newClass,
@@ -66,14 +66,19 @@ exports.updateClass = asyncHandler(async (req, res, next) => {
     students,
     meeting_location,
   } = req.body;
-
-  // Added Here Too Vinnie
-  if (!name || !description || !meeting_time || !meeting_location || !professor || !students) {
-    return res.status(400).json({ status: 400, message: "Missing required fields" });
-  }
-
+  if (
+    !name ||
+    !description ||
+    !meeting_time ||
+    !meeting_location ||
+    !professor ||
+    !students
+  )
+    return res
+      .status(400)
+      .json({ status: 400, message: "Missing required fields" });
   const updatedClass = await Class.findByIdAndUpdate(
-    req.params._id,
+    req.params.id,
     {
       name,
       description,
@@ -83,21 +88,19 @@ exports.updateClass = asyncHandler(async (req, res, next) => {
       meeting_time,
       meeting_location,
     },
-    { new: true } // To return the updated document
+    { new: true } // Return the updated document
   );
-
-  res.status(200).json({
-    status: 200,
+  return res.status(201).json({
+    status: 201,
     message: "Class Updated",
     updatedClass,
   });
 });
 
-
 // Delete a class
 exports.deleteClass = asyncHandler(async (req, res, next) => {
-  const deletedClass = await Class.findByIdAndDelete(req.params._id);
-  res.status(201).json({
+  const deletedClass = await Class.findByIdAndDelete(req.params.id);
+  return res.status(201).json({
     status: 201,
     message: "Class Deleted",
     deletedClass,
@@ -106,8 +109,8 @@ exports.deleteClass = asyncHandler(async (req, res, next) => {
 
 // Get all students in a class
 exports.getAllStudents = asyncHandler(async (req, res, next) => {
-  const students = await Class.findById(req.params._id).students;
-  res.status(200).json({
+  const students = await Class.findById(req.params.id).students;
+  return res.status(200).json({
     status: 200,
     message: "Success",
     students,
@@ -116,7 +119,7 @@ exports.getAllStudents = asyncHandler(async (req, res, next) => {
 
 // Return the name and rate my professor link of the professor
 exports.getProfessor = asyncHandler(async (req, res, next) => {
-  const classDocument = await Class.findById(req.params._id).exec();
+  const classDocument = await Class.findById(req.params.id).exec();
   if (!classDocument) {
     return res.status(404).json({
       status: 404,
@@ -132,7 +135,7 @@ exports.getProfessor = asyncHandler(async (req, res, next) => {
       .toLowerCase()}`,
   };
 
-  res.status(200).json({
+  return res.status(200).json({
     status: 200,
     message: "Success",
     professorInfo,
@@ -144,7 +147,7 @@ exports.getStudySessions = asyncHandler(async (req, res, next) => {
   const studySessions = await Class.findOne({ classId: req.body.classId })
     .events.populate("studySessions")
     .exec();
-  res.status(200).json({
+  return res.status(200).json({
     status: 200,
     message: "Success",
     studySessions,
@@ -158,7 +161,7 @@ exports.addStudySession = asyncHandler(async (req, res, next) => {
   const _class = await Class.findOne({ classId: req.body.classId }).exec();
   _class.events.push(newEvent);
   await _class.save();
-  res.status(201).json({
+  return res.status(201).json({
     status: 201,
     message: "Event Created",
     newEvent,
@@ -174,9 +177,60 @@ exports.deleteStudySession = asyncHandler(async (req, res, next) => {
   ); // Remove the event from the class
   await _class.save();
   var deletedEvent = deleteEvent(req.body, res, next); // Delete the event
-  res.status(201).json({
+  return res.status(201).json({
     status: 201,
     message: "Event Deleted",
     deletedEvent,
   });
+});
+
+// Get all events in a class
+exports.getEvents = asyncHandler(async (req, res, next) => {
+  const event = await Class.findOne(req.params.id).exec();
+  if (!event)
+    return res.status(400).json({ status: 400, message: "Class not found" });
+  else var events = event.events;
+  return res.status(200).json({
+    status: 200,
+    message: "Success",
+    events,
+  });
+});
+
+// Post an event to a class
+exports.addPost = asyncHandler(async (req, res, next) => {
+  const _class = await Class.findOne(req.params.id).exec();
+  if (!_class)
+    return res.status(400).json({ status: 400, message: "Class not found" });
+  else {
+    const new_post = await new Post({
+      author: req.body.author,
+      title: req.body.title,
+      message: req.body.message,
+      timestamp: new Date(req.body.date).toISOString(),
+    });
+    await new_post.save();
+    _class.posts.push(newEvent._id);
+    await _class.save();
+    return res.status(201).json({
+      status: 201,
+      message: "Event Created",
+      newEvent,
+    });
+  }
+});
+
+
+// Get all posts in a class
+exports.getPosts = asyncHandler(async (req, res, next) => {
+  const _class = await Class.findOne( req.params.id ).exec();
+  if (!_class) return res.status(400).json({ status: 400, message: "Class not found" });
+  else {
+    var posts = _class.posts;
+    return res.status(200).json({
+      status: 200,
+      message: "Success",
+      posts,
+    });
+  }
 });

@@ -8,7 +8,7 @@ const Post = require("../models/Post");
 exports.signUp = asyncHandler(async (req, res, next) => {
   const { name, email, password, age, gender, bio, picture } = req.body;
   if (!email || !name || !password)
-    res
+    return res
       .status(400)
       .json({ status: 400, message: "email, name, or password is missing" });
   const hashedPassword = await bcrypt.hash(password, 10);

@@ -1,4 +1,8 @@
-import { RouterProvider, createBrowserRouter } from "react-router-dom";
+import {
+  RouterProvider,
+  createBrowserRouter,
+  useNavigate,
+} from "react-router-dom";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import ClubProfile from "./pages/ClubProfile";
@@ -9,9 +13,7 @@ import UserProfile from "./pages/UserProfile";
 const Router = () => {
   const url =
     // eslint-disable-next-line no-undef
-    process.env.NODE_ENV == "development"
-      ? "http://localhost:3000"
-      : "https://serenebook-production.up.railway.app";
+    process.env.NODE_ENV == "development" ? "http://localhost:3000" : "";
 
   const router = createBrowserRouter([
     { path: "/", element: <Home url={url} /> },
