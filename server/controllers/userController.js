@@ -216,3 +216,46 @@ exports.putFriendRequest = asyncHandler(async (req, res, next) => {
     responder,
   });
 });
+
+// If user a different person then they are able to rate and tag this user
+//  if they are the same person, they are able to edit their own profile
+exports.rateUser = asyncHandler(async (req, res, next) => {
+  const { userID } = req.params;
+  const { raterID, rating, tag } = req.body;
+  if (!raterID)
+    return res.status(400).json({
+      message: "RaterID was not provided",
+      status: 400,
+    });
+  if (userID.length != 24 && raterID.length != 24)
+    return res.status(400).json({
+      message: "User and rater ID must be 24 char long",
+      status: 400,
+    });
+  const user = await User.findById(userID).exec();
+  if (!user)
+    return res.status(400).json({ message: "User not found", status: 400 });
+  if (raterID == userID) {
+    user.rating = rating;
+    user.tag = tag;
+    await user.save();
+    return res.status(200).json({
+      message: "User profile was edited",
+      status: 200,
+      user,
+    });
+  }
+  user.ratings.push({ rater: raterID, rating, tag });
+  await user.save();
+  res.status(201).json({
+    status: 201,
+    message: "User was rated",
+    user,
+  });
+});
+
+
+function calculateRating(currentRating, newRating) {
+  return (currentRating * totalRatings + newRating) / (totalRatings + 1);
+
+}
