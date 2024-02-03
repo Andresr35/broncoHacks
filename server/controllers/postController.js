@@ -187,7 +187,7 @@ exports.addPost = asyncHandler(async (req, res, next) => {
 
 // Get all posts
 exports.getPosts = asyncHandler(async (req, res, next) => {
-  const posts = await Post.find().exec();
+  const posts = await Post.find().populate("author").exec();
   res.status(200).json({
     status: 200,
     message: "Success",

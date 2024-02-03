@@ -15,6 +15,12 @@ const UserSchema = new Schema({
   picture: {
     type: String,
   },
+  social: {
+    facebook: { type: String, trim: true },
+    instagram: { type: String, trim: true },
+    linkedin: { type: String, trim: true },
+    
+  },
 });
 UserSchema.virtual("url").get(function () {
   return `/user/${this._id}`;
