@@ -97,7 +97,7 @@ const Post = ({ post, setNewPost, url }) => {
         <div>
           <p className={styles.timestamp}>{post.date}</p>
           {/* <Link to={post.author.url} className={styles.author}> */}
-          <div>{post.author.name}</div>
+          <Link to={post.author.url}>{post.author.name}</Link>
           {/* <img
               style={{ width: "50px", borderRadius: "100%" }}
               src={post.author.picture}

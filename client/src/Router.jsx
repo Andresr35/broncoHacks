@@ -13,7 +13,9 @@ import UserProfile from "./pages/UserProfile";
 const Router = () => {
   const url =
     // eslint-disable-next-line no-undef
-    process.env.NODE_ENV == "development" ? "http://localhost:3000" : "";
+    process.env.NODE_ENV == "development"
+      ? "http://localhost:3000"
+      : "https://broncohacks-production.up.railway.app";
 
   const router = createBrowserRouter([
     { path: "/", element: <Home url={url} /> },

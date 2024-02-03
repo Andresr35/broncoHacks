@@ -19,7 +19,6 @@ const UserSchema = new Schema({
     facebook: { type: String, trim: true },
     instagram: { type: String, trim: true },
     linkedin: { type: String, trim: true },
-    
   },
 });
 UserSchema.virtual("url").get(function () {
