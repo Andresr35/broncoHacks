@@ -16,19 +16,17 @@ exports.getClubs = asyncHandler(async (req, res, next) => {
 exports.postClub = asyncHandler(async (req, res, next) => {
   const {
     name,
-    clubId,
     description,
     picture,
     meeting_times,
     meeting_location,
   } = req.body;
-  if (!name || !clubId || !description || !meeting_times || !meeting_location)
+  if (!name || !description || !meeting_times || !meeting_location)
     return res
       .status(400)
       .json({ status: 400, message: "Missing required fields" });
   try {
     const newClub = await new Club({
-      clubId,
       name,
       description,
       picture,
@@ -102,7 +100,7 @@ exports.deleteClub = asyncHandler(async (req, res, next) => {
 
 // Add a user to a club
 exports.addUserToClub = asyncHandler(async (req, res, next) => {
-  const club = await Club.findById(req.params.clubID).exec();
+  const club = await Club.findById(req.params.id).exec();
   if (!club) return res.status(400).json({ status: 400, message: "Club not found" });
   else {
     club.members.push(req.params.userID);

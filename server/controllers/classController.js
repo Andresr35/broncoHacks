@@ -206,13 +206,28 @@ exports.addPost = asyncHandler(async (req, res, next) => {
       message: req.body.message,
       timestamp: new Date(req.body.date).toISOString(),
     });
-    await newEvent.save();
-    _class.events.push(newEvent._id);
+    await new_post.save();
+    _class.posts.push(newEvent._id);
     await _class.save();
     return res.status(201).json({
       status: 201,
       message: "Event Created",
       newEvent,
+    });
+  }
+});
+
+
+// Get all posts in a class
+exports.getPosts = asyncHandler(async (req, res, next) => {
+  const _class = await Class.findOne( req.params.id ).exec();
+  if (!_class) return res.status(400).json({ status: 400, message: "Class not found" });
+  else {
+    var posts = _class.posts;
+    return res.status(200).json({
+      status: 200,
+      message: "Success",
+      posts,
     });
   }
 });
