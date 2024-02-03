@@ -1,0 +1,100 @@
+.title {
+  font-weight: 500;
+  font-size: 2.3rem;
+  text-align: center;
+}
+.tabs {
+  display: flex;
+  width: 256px;
+  height: 40px;
+  margin: 0 auto;
+}
+.tabs div {
+  display: flex;
+  background-color: var(--primary);
+  min-width: 128px;
+  min-height: 40px;
+  text-align: center;
+  margin: auto;
+  justify-content: center;
+}
+.tabs h3 {
+  display: inline;
+  font-size: 0.75rem;
+
+  color: var(--background);
+}
+.tabs .active {
+  background-color: var(--accent);
+}
+.login {
+  border-radius: 11px 0 0 11px;
+}
+.signIn {
+  border-radius: 0 11px 11px 0;
+}
+
+.loginContainer {
+  position: absolute;
+  background-color: var(--accent);
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  margin: auto;
+  border-radius: 25px;
+  width: 256px;
+  height: 356px;
+}
+.loginContainer h3,
+.signInContainer h3 {
+  margin: 0;
+  font-weight: 300;
+  text-align: center;
+  font-size: 2.3rem;
+  color: var(--background);
+}
+.input {
+  margin: 40px auto;
+  width: 144px;
+}
+.input h4 {
+  box-sizing: border-box;
+  font-size: 1.3rem;
+  margin: 0;
+  font-weight: 500;
+  color: var(--background);
+}
+.input input {
+  box-sizing: border-box;
+  background-color: var(--background);
+  width: 100%;
+  border: none;
+  outline: none;
+  border-radius: 7px;
+  color: var(--text);
+}
+.signInContainer {
+  position: absolute;
+  background-color: var(--accent);
+  top: 20%;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  margin: auto;
+  border-radius: 25px;
+  width: 256px;
+  height: auto;
+}
+.button {
+  background-color: var(--primary);
+  margin: auto;
+  display: block;
+}
+.button:hover {
+  background-color: var(--secondary);
+}
+.signInContainer .input {
+  margin: 10px auto;
+  width: 144px;
+}
