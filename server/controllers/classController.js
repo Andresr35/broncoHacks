@@ -85,13 +85,15 @@ exports.updateClass = asyncHandler(async (req, res, next) => {
     students,
     meeting_time,
     meeting_location,
-  });
+  }, {new: true} // Return the updated document
+  );
   return res.status(201).json({
     status: 201,
     message: "Class Updated",
     updatedClass,
   });
 });
+
 
 // Delete a class
 exports.deleteClass = asyncHandler(async (req, res, next) => {
