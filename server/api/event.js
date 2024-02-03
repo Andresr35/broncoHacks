@@ -2,13 +2,13 @@ const express = require("express");
 const router = express.Router();
 
 const {
-    getAllEvents,
-    postEvent,
-    updateEvent,
-    deleteEvent,
-    getEventAttendees,
-    joinEvent,
-    leaveEvent,
+  getAllEvents,
+  postEvent,
+  updateEvent,
+  deleteEvent,
+  getEventAttendees,
+  joinEvent,
+  leaveEvent,
 } = require("../controllers/eventController");
 
 router.post("/", postEvent);
