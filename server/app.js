@@ -11,8 +11,7 @@ const apiRouter = require("./api/index");
 // Connect to database
 const mongoose = require("mongoose");
 mongoose.set("strictQuery", false);
-// const mongoDB = process.env.MONGOPASS;
-const mongoDB = "mongodb+srv://vinhph003:passworde@cluster0.zdxrkke.mongodb.net/?retryWrites=true&w=majority";
+const mongoDB = process.env.MONGOPASS;
 main().catch((err) => console.log(err));
 async function main() {
   await mongoose.connect(mongoDB);
