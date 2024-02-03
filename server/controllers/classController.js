@@ -4,6 +4,14 @@ const Class = require("../models/Class");
 const Event = require("../models/Event");
 const { postEvent } = require("./eventController");
 
+mongoose.set("strictQuery", false);
+const mongoDB = "mongodb+srv://vinhph003:passworde@cluster0.zdxrkke.mongodb.net/?retryWrites=true&w=majority";
+main().catch((err) => console.log(err));
+async function main() {
+  await mongoose.connect(mongoDB);
+  console.log("connected");
+}
+
 // Get all classes that a user is in or all classes with a specific name
 exports.getClasses = asyncHandler(async (req, res, next) => {
     const classes = await Class.find({
@@ -14,8 +22,8 @@ exports.getClasses = asyncHandler(async (req, res, next) => {
 
 // Create a new class
 exports.postClass = asyncHandler(async (req, res, next) => {
-    const { name, description, picture, meeting_times, meeting_location } = req.body;
-    if (!name || !description || !meeting_times || !meeting_location)
+    const { name, description, picture, professor, students, meeting_time, meeting_location } = req.body;
+    if (!name || !description || !meeting_time || !meeting_location || !professor)
         res
             .status(400)
             .json({ status: 400, message: "Missing required fields" });
@@ -24,7 +32,9 @@ exports.postClass = asyncHandler(async (req, res, next) => {
             name,
             description,
             picture,
-            meeting_times,
+            professor,
+            students,
+            meeting_time,
             meeting_location
         });
     await newClass.save();
@@ -37,8 +47,8 @@ exports.postClass = asyncHandler(async (req, res, next) => {
 
 // Update a class
 exports.updateClass = asyncHandler(async (req, res, next) => {
-    const { name, description, picture, meeting_times, meeting_location } = req.body;
-    if (!name || !description || !meeting_times || !meeting_location)
+    const { name, description, picture, meeting_time, professor, students, meeting_location } = req.body;
+    if (!name || !description || !meeting_time || !meeting_location || !professor || !students)
         res
             .status(400)
             .json({ status: 400, message: "Missing required fields" });
@@ -46,7 +56,9 @@ exports.updateClass = asyncHandler(async (req, res, next) => {
         name,
         description,
         picture,
-        meeting_times,
+        professor,
+        students,
+        meeting_time,
         meeting_location
     });
     res.status(201).json({
@@ -78,10 +90,21 @@ exports.getAllStudents = asyncHandler(async (req, res, next) => {
 
 // Return the name and rate my professor link of the professor
 exports.getProfessor = asyncHandler(async (req, res, next) => {
+    console.log("Body ID " + req._id);
+    const classDocument = await Class.findById({ _id : res._id }).exec();
+    if (!classDocument) {
+        return res.status(404).json({
+            status: 404,
+            message: "Class not found",
+        });
+    }
+
+    const professor = classDocument.professor;
     const professorInfo = {
-        name: await Class.findById(req.params.classID).professor,
+        name: professor,
         link: `https://www.ratemyprofessors.com/search/professors?q=${professor.replace(" ", "+").toLowerCase()}`
     }
+
     res.status(200).json({
         status: 200,
         message: "Success",
