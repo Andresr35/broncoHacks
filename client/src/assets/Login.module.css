@@ -34,7 +34,7 @@
   border-radius: 0 11px 11px 0;
 }
 
-.logInContainer {
+.loginContainer {
   position: absolute;
   background-color: var(--accent);
   top: 0;
@@ -46,7 +46,8 @@
   width: 256px;
   height: 356px;
 }
-.logInContainer h3 {
+.loginContainer h3,
+.signInContainer h3 {
   margin: 0;
   font-weight: 300;
   text-align: center;
@@ -71,4 +72,29 @@
   border: none;
   outline: none;
   border-radius: 7px;
+  color: var(--text);
+}
+.signInContainer {
+  position: absolute;
+  background-color: var(--accent);
+  top: 20%;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  margin: auto;
+  border-radius: 25px;
+  width: 256px;
+  height: auto;
+}
+.button {
+  background-color: var(--primary);
+  margin: auto;
+  display: block;
+}
+.button:hover {
+  background-color: var(--secondary);
+}
+.signInContainer .input {
+  margin: 10px auto;
+  width: 144px;
 }
