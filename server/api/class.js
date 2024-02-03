@@ -1,4 +1,5 @@
 const express = require("express");
+const router = express.Router();
 
 const {
     getClasses,
@@ -11,7 +12,6 @@ const {
     addStudySession,
     deleteStudySession
   } = require("../controllers/classController");
-  const router = express.Router();
     router.get("/:userID", getClasses);
     router.post("/", postClass);
     router.put("/", updateClass);

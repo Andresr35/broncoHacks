@@ -34,7 +34,7 @@ exports.updateEvent = asyncHandler(async (req, res, next) => {
         return res
             .status(400)
             .json({ status: 400, message: 'Missing required fields' });
-    const updatedEvent = await Event.findByIdAndUpdate(req.params.eventID, {
+    const updatedEvent = await Event.findOne({id : req.params.id}, {
         name,
         description,
         type,
@@ -51,7 +51,7 @@ exports.updateEvent = asyncHandler(async (req, res, next) => {
 
 // Delete an event
 exports.deleteEvent = asyncHandler(async (req, res, next) => {
-    const deletedEvent = await Event.findByIdAndDelete(req.params.eventID);
+    const deletedEvent = await Event.findByIdAndDelete(req.params.id);
     res.status(201).json({
         status: 201,
         message: 'Event Deleted',
