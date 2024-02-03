@@ -1,0 +1,23 @@
+.member {
+  background-color: var(--background);
+  width: 280px;
+  padding: 5px;
+  margin: 0 auto;
+  border-radius: 15px;
+  margin-top: 15px;
+}
+.profilePic {
+  width: 50px;
+  height: 50px;
+  border: 2px var(--text) solid;
+  border-radius: 100px;
+  margin-left: 10px;
+  display: inline-block;
+  vertical-align: middle;
+}
+.member h3 {
+  display: inline-block;
+  margin: 0;
+  margin-left: 15px;
+  vertical-align: middle;
+}

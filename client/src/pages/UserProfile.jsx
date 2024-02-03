@@ -4,6 +4,7 @@ import { useState } from "react";
 import styles from "../assets/UserProfile.module.css";
 import Post from "../components/Post";
 import Star from "../assets/svg/Star";
+import Member from "../components/Member";
 
 const UserProfile = ({ url }) => {
   const [active, setActive] = useState("posts");
@@ -101,6 +102,11 @@ const UserProfile = ({ url }) => {
         {active == "posts"
           ? userPosts.posts.map((post, index) => (
               <Post post={post} key={index} url={url} setNewPost={() => {}} />
+            ))
+          : null}
+        {active == "friends"
+          ? user.friends.map((member, index) => (
+              <Member member={member} key={index} url={url} />
             ))
           : null}
       </div>

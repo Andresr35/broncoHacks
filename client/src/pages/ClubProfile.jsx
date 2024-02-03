@@ -4,6 +4,7 @@ import { useState } from "react";
 import Post from "../components/Post";
 import Navbar from "../components/Navbar";
 import Event from "../components/Event";
+import Member from "../components/Member";
 
 const ClubProfile = ({ url }) => {
   const [clubProfile, setClubProfile] = useState({
@@ -38,7 +39,11 @@ const ClubProfile = ({ url }) => {
         },
       },
     ],
-    members: [],
+    members: [
+      {
+        name: "test",
+      },
+    ],
   });
   const [events, setEvents] = useState([
     {
@@ -59,6 +64,7 @@ const ClubProfile = ({ url }) => {
       meeting_location: " Friends of Amauetry",
     },
   ]);
+
   const [active, setActive] = useState("posts");
 
   return (
@@ -69,7 +75,6 @@ const ClubProfile = ({ url }) => {
         <p>{clubProfile.meeting_time}</p>
         <p>{clubProfile.meeting_location}</p>
       </div>
-
       <div className={styles.container}>
         <div className={styles.classNav}>
           <div
@@ -99,6 +104,11 @@ const ClubProfile = ({ url }) => {
         {active == "events"
           ? events.map((event, index) => (
               <Event event={event} key={index} url={url} />
+            ))
+          : null}
+        {active == "members"
+          ? clubProfile.members.map((member, index) => (
+              <Member member={member} key={index} url={url} />
             ))
           : null}
       </div>
