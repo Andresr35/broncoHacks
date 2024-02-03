@@ -8,8 +8,8 @@ mongoose.set("strictQuery", false);
 const mongoDB = "mongodb+srv://vinhph003:passworde@cluster0.zdxrkke.mongodb.net/?retryWrites=true&w=majority";
 main().catch((err) => console.log(err));
 async function main() {
-  await mongoose.connect(mongoDB);
-  console.log("connected 2");
+    await mongoose.connect(mongoDB);
+    console.log("connected 2");
 }
 
 // Get all classes that a user is in or all classes with a specific name
@@ -22,22 +22,33 @@ exports.getClasses = asyncHandler(async (req, res, next) => {
 
 // Create a new class
 exports.postClass = asyncHandler(async (req, res, next) => {
-    const { name, description, picture, professor, students, meeting_time, meeting_location } = req.body;
-    if (!name || !description || !meeting_time || !meeting_location || !professor)
+    const { name, classId, description, picture, professor, students, meeting_time, meeting_location } = req.body;
+    if (!name || !classId || !description || !meeting_time || !meeting_location || !professor)
         res
             .status(400)
             .json({ status: 400, message: "Missing required fields" });
-    const newClass = await new
-        Class({
-            classId,
-            name,
-            description,
-            picture,
-            professor,
-            students,
-            meeting_time,
-            meeting_location
-        });
+
+    try {
+        const newClass = await new
+            Class({
+                classId,
+                name,
+                description,
+                picture,
+                professor,
+                students,
+                meeting_time,
+                meeting_location
+            });
+        await newClass.save();
+    } catch (err) {
+        if (err.code === 11000) {
+            return res.status(400).json({
+                status: 400,
+                message: 'Duplicate classId',
+            });
+        }
+    }
     await newClass.save();
     res.status(201).json({
         status: 201,
@@ -53,7 +64,7 @@ exports.updateClass = asyncHandler(async (req, res, next) => {
         res
             .status(400)
             .json({ status: 400, message: "Missing required fields" });
-    const updatedClass = await Class.findByIdAndUpdate(classId, {
+    const updatedClass = await Class.findOneAndUpdate({ classId: req.body.classId }, {
         name,
         description,
         picture,
@@ -71,7 +82,7 @@ exports.updateClass = asyncHandler(async (req, res, next) => {
 
 // Delete a class
 exports.deleteClass = asyncHandler(async (req, res, next) => {
-    const deletedClass = await Class.findByIdAndDelete(classId);
+    const deletedClass = await Class.findOneAndDelete({ classId: req.body.classId });
     res.status(201).json({
         status: 201,
         message: "Class Deleted",
@@ -81,7 +92,7 @@ exports.deleteClass = asyncHandler(async (req, res, next) => {
 
 // Get all students in a class
 exports.getAllStudents = asyncHandler(async (req, res, next) => {
-    const students = await Class.findById(classId).students;
+    const students = await Class.findOne({ classId: req.body.classId }).students;
     res.status(200).json({
         status: 200,
         message: "Success",
@@ -91,7 +102,7 @@ exports.getAllStudents = asyncHandler(async (req, res, next) => {
 
 // Return the name and rate my professor link of the professor
 exports.getProfessor = asyncHandler(async (req, res, next) => {
-    const classDocument = await Class.findOne({ name: req.body.name }).exec();
+    const classDocument = await Class.findOne({ classId: req.body.classId }).exec();
     if (!classDocument) {
         return res.status(404).json({
             status: 404,
@@ -114,7 +125,7 @@ exports.getProfessor = asyncHandler(async (req, res, next) => {
 
 // Populate the study session events of a class
 exports.getStudySessions = asyncHandler(async (req, res, next) => {
-    const studySessions = await Class.findById(req.params.classID).events.populate("studySessions").exec();
+    const studySessions = await Class.findOne({ classId: req.body.classId }).events.populate("studySessions").exec();
     res.status(200).json({
         status: 200,
         message: "Success",
@@ -126,7 +137,7 @@ exports.getStudySessions = asyncHandler(async (req, res, next) => {
 // Add an study session event to a class
 exports.addStudySession = asyncHandler(async (req, res, next) => {
     var newEvent = postEvent(req.body, res, next);
-    const _class = await Class.findById(classId).exec();
+    const _class = await Class.findOne({ classId: req.body.classId }).exec();
     _class.events.push(newEvent);
     await _class.save();
     res.status(201).json({
@@ -139,7 +150,7 @@ exports.addStudySession = asyncHandler(async (req, res, next) => {
 // Update a study session event (eventController will handle the actual event update)
 // Delete a study session event
 exports.deleteStudySession = asyncHandler(async (req, res, next) => {
-    const _class = await Class.findById(classId).exec();
+    const _class = await Class.findOne({ classId: req.body.classId }).exec();
     _class.events = _class.events.filter(event => event._id != req.params.eventID); // Remove the event from the class
     await _class.save();
     var deletedEvent = deleteEvent(req.body, res, next); // Delete the event

@@ -42,6 +42,7 @@ async function testModel() {
 
   const req = httpMocks.createRequest({
     body: {
+      classId: '123',
       name: 'CS2400',
       description: 'Data Structures and Algorithms',
       professor: 'Thanh Nguyen',
