@@ -4,13 +4,6 @@ const Class = require("../models/Class");
 const Event = require("../models/Event");
 const { postEvent } = require("./eventController");
 
-mongoose.set("strictQuery", false);
-const mongoDB = "mongodb+srv://vinhph003:passworde@cluster0.zdxrkke.mongodb.net/?retryWrites=true&w=majority";
-main().catch((err) => console.log(err));
-async function main() {
-    await mongoose.connect(mongoDB);
-    console.log("connected 2");
-}
 
 // Get all classes that a user is in or all classes with a specific name
 exports.getClasses = asyncHandler(async (req, res, next) => {
@@ -41,6 +34,11 @@ exports.postClass = asyncHandler(async (req, res, next) => {
                 meeting_location
             });
         await newClass.save();
+        res.status(201).json({
+            status: 201,
+            message: "Class Created",
+            newClass,
+        });
     } catch (err) {
         if (err.code === 11000) {
             return res.status(400).json({
@@ -49,12 +47,6 @@ exports.postClass = asyncHandler(async (req, res, next) => {
             });
         }
     }
-    await newClass.save();
-    res.status(201).json({
-        status: 201,
-        message: "Class Created",
-        newClass,
-    });
 });
 
 // Update a class

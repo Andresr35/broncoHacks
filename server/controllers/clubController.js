@@ -13,31 +13,41 @@ exports.getClubs = asyncHandler(async (req, res, next) => {
 
 // Create a new club
 exports.postClub = asyncHandler(async (req, res, next) => {
-    const { name, description, picture, meeting_times, meeting_location } = req.body;
-    if (!name || !description || !meeting_times || !meeting_location)
+    const { name, clubId, description, picture, meeting_times, meeting_location } = req.body;
+    if (!name || !clubId || !description || !meeting_times || !meeting_location)
         res
             .status(400)
             .json({ status: 400, message: 'Missing required fields' });
-    const newClub = await new Club({
-        name,
-        description,
-        picture,
-        admins: [req.user._id],
-        meeting_times,
-        meeting_location,
-    });
-    await newClub.save();
-    res.status(201).json({
-        status: 201,
-        message: 'Club Created',
-        newClub,
-    });
+    try {
+        const newClub = await new Club({
+            clubId,
+            name,
+            description,
+            picture,
+            admins: [req.user._id],
+            meeting_times,
+            meeting_location,
+        });
+        await newClub.save();
+        res.status(201).json({
+            status: 201,
+            message: 'Club Created',
+            newClub,
+        });
+    } catch (err) {
+        if (err.code === 11000) {
+            return res.status(400).json({
+                status: 400,
+                message: 'Duplicate classId',
+            });
+        }
+    }
 });
 
 // Update a club
 exports.updateClub = asyncHandler(async (req, res, next) => {
-    const { name, description, picture, meeting_times, meeting_location } = req.body;
-    if (!name || !description || !meeting_times || !meeting_location)
+    const { name, clubId, description, picture, meeting_times, meeting_location } = req.body;
+    if (!name || !clubId || !description || !meeting_times || !meeting_location)
         res
             .status(400)
             .json({ status: 400, message: 'Missing required fields' });
@@ -45,7 +55,8 @@ exports.updateClub = asyncHandler(async (req, res, next) => {
     if (!admin)
         res.status(401).json({ status: 401, message: 'You must be an admin to update this club' });
     else {
-        const updatedClub = await Club.findByIdAndUpdate(req.params.clubID, {
+        const updatedClub = await Club.findOneAndUpdate({ clubId: res.params.clubId }, {
+            clubId,
             name,
             description,
             picture,
