@@ -16,7 +16,7 @@ const Router = () => {
   const router = createBrowserRouter([
     { path: "/", element: <Home url={url} /> },
     { path: "/login", element: <Login url={url} /> },
-    { path: "/profile/:profileID", element: <UserProfile url={url} /> },
+    { path: "/user/:userID", element: <UserProfile url={url} /> },
     { path: "/class/:classID", element: <ClassProfile url={url} /> },
     { path: "/school", element: <SchoolPage url={url} /> },
     { path: "/profile/:clubID", element: <ClubProfile url={url} /> },

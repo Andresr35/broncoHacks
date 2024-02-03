@@ -1,0 +1,52 @@
+.classNav {
+  width: 340px;
+  display: flex;
+  border-radius: 25px;
+  background-color: var(--primary);
+}
+.classNav div {
+  border-radius: 25px;
+  width: 170px;
+  height: 52px;
+  line-height: 52px;
+  background-color: var(--primary);
+  text-align: center;
+  color: var(--background);
+}
+.classNav .active {
+  position: relative;
+  z-index: 3;
+  background-color: var(--accent);
+}
+.container {
+  width: 340px;
+  min-height: 500px;
+  border-radius: 25px 25px 0 0;
+  margin: 0 auto;
+  background-color: var(--accent);
+}
+.h1 {
+  margin-left: 25px;
+  font-weight: 500;
+  font-size: 2.3rem;
+}
+.userProfile svg {
+  width: 20px;
+  height: 20px;
+}
+.bio {
+  margin-left: 25px;
+  width: 276px;
+}
+.userData {
+  margin-left: 25px;
+}
+.profilePic {
+  position: absolute;
+  top: 25px;
+  right: 25px;
+  width: 75px;
+  height: 75px;
+  border: 2px var(--text) solid;
+  border-radius: 100px;
+}

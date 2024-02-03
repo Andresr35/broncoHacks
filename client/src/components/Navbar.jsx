@@ -13,7 +13,7 @@ const Navbar = (props) => {
       <Link to={"/school"}>
         <Book />
       </Link>
-      <Link>
+      <Link to={"/user/123"}>
         <div className={styles.profile}></div>
       </Link>
     </nav>
