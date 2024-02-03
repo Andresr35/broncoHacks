@@ -29,6 +29,7 @@ exports.postClass = asyncHandler(async (req, res, next) => {
             .json({ status: 400, message: "Missing required fields" });
     const newClass = await new
         Class({
+            classId,
             name,
             description,
             picture,
@@ -52,7 +53,7 @@ exports.updateClass = asyncHandler(async (req, res, next) => {
         res
             .status(400)
             .json({ status: 400, message: "Missing required fields" });
-    const updatedClass = await Class.findByIdAndUpdate(req.params.classID, {
+    const updatedClass = await Class.findByIdAndUpdate(classId, {
         name,
         description,
         picture,
@@ -70,7 +71,7 @@ exports.updateClass = asyncHandler(async (req, res, next) => {
 
 // Delete a class
 exports.deleteClass = asyncHandler(async (req, res, next) => {
-    const deletedClass = await Class.findByIdAndDelete(req.params.classID);
+    const deletedClass = await Class.findByIdAndDelete(classId);
     res.status(201).json({
         status: 201,
         message: "Class Deleted",
@@ -80,7 +81,7 @@ exports.deleteClass = asyncHandler(async (req, res, next) => {
 
 // Get all students in a class
 exports.getAllStudents = asyncHandler(async (req, res, next) => {
-    const students = await Class.findById(req.params.classID).students;
+    const students = await Class.findById(classId).students;
     res.status(200).json({
         status: 200,
         message: "Success",
@@ -126,7 +127,7 @@ exports.getStudySessions = asyncHandler(async (req, res, next) => {
 // Add an study session event to a class
 exports.addStudySession = asyncHandler(async (req, res, next) => {
     var newEvent = postEvent(req.body, res, next);
-    const _class = await Class.findById(req.params.classID).exec();
+    const _class = await Class.findById(classId).exec();
     _class.events.push(newEvent);
     await _class.save();
     res.status(201).json({
@@ -139,7 +140,7 @@ exports.addStudySession = asyncHandler(async (req, res, next) => {
 // Update a study session event (eventController will handle the actual event update)
 // Delete a study session event
 exports.deleteStudySession = asyncHandler(async (req, res, next) => {
-    const _class = await Class.findById(req.params.classID).exec();
+    const _class = await Class.findById(classId).exec();
     _class.events = _class.events.filter(event => event._id != req.params.eventID); // Remove the event from the class
     await _class.save();
     var deletedEvent = deleteEvent(req.body, res, next); // Delete the event
