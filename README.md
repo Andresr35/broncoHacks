@@ -27,3 +27,4 @@
 ## Dev Resources
 
 [Canvas Api](https://canvas.instructure.com/doc/api/index.html)
+[Axios API](https://axios-http.com/docs/api_intro)
