@@ -71,11 +71,20 @@ exports.deleteEvent = asyncHandler(async (req, res, next) => {
 });
 
 // Get all events of a specific type and that a user is attending
-exports.getAllEvents = asyncHandler(async (req, res, next) => {
+exports.getEvent = asyncHandler(async (req, res, next) => {
     const { type } = req.params;
     const events = await Event.find({
         $and: [{ type: type }, { attendees: { $in: [req.params.userId] } }]
     }).exec();
+    res.status(200).json({
+        status: 200,
+        message: 'Success',
+        events,
+    });
+});
+
+exports.getAllEvents = asyncHandler(async (req, res, next) => {
+    const events = await Event.find().exec();
     res.status(200).json({
         status: 200,
         message: 'Success',

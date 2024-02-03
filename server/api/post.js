@@ -12,5 +12,4 @@ router.delete("/comments/:commentID", deleteComment);
 router.delete("/:postID", deletePost);
 router.post("/:postID/comments", addComment);
 router.put("/:postID/likes", handleLike);
-
 module.exports = router;
