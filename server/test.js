@@ -35,16 +35,7 @@ async function testModel() {
     picture: "example.com",
   });
 
-  // const event = new Event({
-  //   name: "test",
-  //   description: "test",
-  //   picture: "test",
-  //   type: "Study",
-  //   attendees: [user._id],
-  //   posts: [],
-  //   meeting_time: "10:00am",
-  //   meeting_location: "library"
-  // });
+
   const new_class = new Class({
     name: "CS2400",
     description: "Data Structures and Algorithms",
@@ -56,12 +47,18 @@ async function testModel() {
   });
 
   const req = httpMocks.createRequest({
-    body: new_class.toObject(),
+    body: {
+      _id : new_class._id,
+      ...new_class.toObject()
+    },
   });
 
   const res = httpMocks.createResponse();
   const next = null;
-  await postClass(req, res, next);
+//   await postClass(req, res, next);
+console.log(req.param._id);
+  await getProfessor(req, res, next);
+    console.log(res._getData());
   // const req2 = httpMocks.createRequest({
   //   body: {
   //     name: 'CS2640',
@@ -77,8 +74,8 @@ async function testModel() {
   // const next2 = null;
   // await postClass(req2, res2, next2);
 
-  await getProfessor(req, res, next);
-  console.log(res._getData());
+//   await getProfessor(req, res, next);
+//   console.log(res._getData());
 
   console.log("finished");
 }
