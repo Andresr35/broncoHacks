@@ -1,21 +1,22 @@
-const { PutCommand } = require("@aws-sdk/client-dynamodb");
-const Messages = require("./models/Message");
+const model = require("./models/Club");
 
-Messages.createTable();
+/*
+    name: { type: String, required: true, trim: true },
+    description: { type: String, required: true, trim: true },
+    members: [{ type: Schema.Types.ObjectId, ref: "User" }],
+    picture: { type: String, required: true },
+    posts: [{ type: Schema.Types.ObjectId, ref: "Post" }],
+    admins: [{ type: Schema.Types.ObjectId, ref: "User" }],
+    meeting_times: { type: String, required: true, trim: true },
+    meeting_location: { type: String, required: true, trim: true }
+    */
+   
+const club = new model({
+    name: "Test Club",
+    description: "This is a test club",
+    members: ["Test Member"],
+    events: ["Test Event"],
+});
 
-
-const params = {
-    TableName: 'Messages',
-    Item: {
-        'messenger': { S: 'user1' },
-        'created': { N: '1633024800' },  // timestamp
-        'reciever': { S: 'user2' },
-        'message': { S: 'Hello, world!' }
-    }
-};
-
-const putCommand = new PutCommand(params);
-
-client.send(putCommand)
-    .then((data) => console.log(data))
-    .catch((error) => console.error(error));
+club.save();
+console.log(club);

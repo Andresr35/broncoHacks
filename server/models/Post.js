@@ -69,4 +69,3 @@ PostSchema.set("toObject", { virtuals: true });
 PostSchema.set("toJSON", { virtuals: true });
 
 module.exports = mongoose.model("Post", PostSchema);
-
