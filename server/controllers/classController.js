@@ -23,14 +23,11 @@ exports.postClass = asyncHandler(async (req, res, next) => {
     meeting_time,
     meeting_location,
   } = req.body;
-  if (
-    !name ||
-    !description ||
-    !meeting_time ||
-    !meeting_location ||
-    !professor
-  )
-    res.status(400).json({ status: 400, message: "Missing required fields" });
+
+  // added HERE VINNIE
+  if (!name || !description || !meeting_time || !meeting_location || !professor) {
+    return res.status(400).json({ status: 400, message: "Missing required fields" });
+  }
 
   try {
     const newClass = await new Class({
@@ -69,15 +66,12 @@ exports.updateClass = asyncHandler(async (req, res, next) => {
     students,
     meeting_location,
   } = req.body;
-  if (
-    !name ||
-    !description ||
-    !meeting_time ||
-    !meeting_location ||
-    !professor ||
-    !students
-  )
-    res.status(400).json({ status: 400, message: "Missing required fields" });
+
+  // Added Here Too Vinnie
+  if (!name || !description || !meeting_time || !meeting_location || !professor || !students) {
+    return res.status(400).json({ status: 400, message: "Missing required fields" });
+  }
+
   const updatedClass = await Class.findByIdAndUpdate(
     req.params._id,
     {
@@ -88,14 +82,17 @@ exports.updateClass = asyncHandler(async (req, res, next) => {
       students,
       meeting_time,
       meeting_location,
-    }
+    },
+    { new: true } // To return the updated document
   );
-  res.status(201).json({
-    status: 201,
+
+  res.status(200).json({
+    status: 200,
     message: "Class Updated",
     updatedClass,
   });
 });
+
 
 // Delete a class
 exports.deleteClass = asyncHandler(async (req, res, next) => {
