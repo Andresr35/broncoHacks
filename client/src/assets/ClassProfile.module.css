@@ -21,6 +21,7 @@
   line-height: 52px;
   background-color: var(--primary);
   text-align: center;
+  color: var(--background);
 }
 .classNav .active {
   position: relative;

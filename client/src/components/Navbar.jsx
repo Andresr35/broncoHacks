@@ -7,10 +7,10 @@ import Book from "../assets/svg/Book";
 const Navbar = (props) => {
   return (
     <nav>
-      <Link>
+      <Link to={"/"}>
         <Home />
       </Link>
-      <Link>
+      <Link to={"/school"}>
         <Book />
       </Link>
       <Link>

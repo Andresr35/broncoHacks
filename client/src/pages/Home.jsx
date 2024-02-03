@@ -52,6 +52,7 @@ const Home = ({ url }) => {
       },
     ],
   });
+
   return (
     <main>
       <h1 className={styles.h1}>Bronco Life</h1>

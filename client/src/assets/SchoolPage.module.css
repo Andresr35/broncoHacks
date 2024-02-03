@@ -1,3 +1,8 @@
+.h1 {
+  text-align: center;
+  font-weight: 500;
+  font-size: 3rem;
+}
 .classNav {
   width: 340px;
   display: flex;
@@ -24,9 +29,4 @@
   border-radius: 25px 25px 0 0;
   margin: 0 auto;
   background-color: var(--accent);
-}
-.h1 {
-  text-align: center;
-  font-weight: 500;
-  font-size: 3rem;
 }
