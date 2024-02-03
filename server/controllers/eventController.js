@@ -114,3 +114,16 @@ exports.leaveEvent = asyncHandler(async (req, res, next) => {
     });
 });
 
+// Get all attendees of an event
+exports.getEventAttendees = asyncHandler(async (req, res, next) => {
+    const event = await Event.findOne({ eventId: req.params.eventId }).exec();
+    if (!event)
+        return res
+            .status(400)
+            .json({ status: 400, message: 'Event not found' });
+    res.status(200).json({
+        status: 200,
+        message: 'Success',
+        attendees: event.attendees,
+    });
+});
