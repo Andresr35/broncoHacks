@@ -3,6 +3,7 @@ const router = express.Router();
 
 const {
     getClasses,
+    getAllClasses,
     postClass,
     updateClass,
     deleteClass,
@@ -13,6 +14,7 @@ const {
     deleteStudySession
   } = require("../controllers/classController");
     router.get("/:userID", getClasses);
+    router.get("/", getAllClasses);
     router.post("/", postClass);
     router.put("/", updateClass);
     router.delete("/", deleteClass);

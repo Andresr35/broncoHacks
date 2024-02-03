@@ -13,6 +13,10 @@ exports.getClasses = asyncHandler(async (req, res, next) => {
   return res.status(200).json({ message: "Success", status: 200, classes });
 });
 
+exports.getAllClasses = asyncHandler(async (req, res, next) => {
+  const classes = await nClass.find().exec();
+  return res.status(200).json({ message: "Success", status: 200, classes });
+});
 // Create a new class
 exports.postClass = asyncHandler(async (req, res, next) => {
   const {
