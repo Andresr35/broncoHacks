@@ -77,6 +77,11 @@ Installation of npm and node is required!
 
 This uses React in the front end, with an express and node backend. The database being used is a MongoDB database, being connected with Mongoose. Bcryptjs is also being used in conjunction with JWT tokens to provide authentication to users when they log in.
 
+### Method
+
+While two other students worked on the structure and code of the backend, one student worked on the design of the website using figma before continuing onto writing react and css
+![Figma Image](https://github.com/Andresr35/broncoHacks/assets/46615885/ebbdfde5-05de-48dd-8831-f98bad387666)
+
 <!-- LICENSE -->
 ## License
 
