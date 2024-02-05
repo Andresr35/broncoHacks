@@ -1,19 +1,35 @@
-# Bronco Hacks 2024
+   
+[![Contributors][contributors-shield]][contributors-url]
+[![MIT License][license-shield]][license-url]
+<!-- ![image](https://github.com/Andresr35/broncoHacks/assets/46615885/74b9ba24-f932-415c-9fe3-7acf5f6b2792) -->
+
+<br />
+<div align="center">
+  <a href="https://github.com/Andresr35/broncoHacks">
+    <img src="https://github.com/Andresr35/broncoHacks/assets/46615885/74b9ba24-f932-415c-9fe3-7acf5f6b2792" alt="Logo" width="160" height="80">
+    
+  </a>
+
+<h3 align="center">Bronco Life</h3>
+
+  <p align="center">
+    project_description
+    <br />
+    <a href="https://github.com/Andresr35/broncoHacks">View Demo</a>
+    ·
+    <a href="https://github.com/Andresr35/broncoHacks/issues">Report Bug</a>
+    ·
+    <a href="https://github.com/Andresr35/broncoHacks/issues">Request Feature</a>
+  </p>
+</div>
+
+![Static Badge](https://img.shields.io/badge/react-m?style=for-the-badge&logo=react&labelColor=black&color=%2361DAFB) ![Static Badge](https://img.shields.io/badge/node.js-m?style=for-the-badge&logo=nodedotjs&labelColor=black&color=%23339933) ![Static Badge](https://img.shields.io/badge/mongoDB-m?style=for-the-badge&logo=mongodb&labelColor=black&color=%2347A248) ![Static Badge](https://img.shields.io/badge/mongoose-m?style=for-the-badge&logo=mongoosedotws&labelColor=black&color=%23F04D35) ![Static Badge](https://img.shields.io/badge/express-m?style=for-the-badge&logo=express&labelColor=black&color=black) ![Static Badge](https://img.shields.io/badge/vite-m?style=for-the-badge&logo=vite&labelColor=black&color=%23646CFF) ![Static Badge](https://img.shields.io/badge/vercel-m?style=for-the-badge&logo=vercel&labelColor=black&color=%23000000) ![Static Badge](https://img.shields.io/badge/railway-r?style=for-the-badge&logo=railway&labelColor=black&color=%230B0D0E)
 
 ## Hackathon Description
 
 - Web dev or cyber security
 - Present to industry professionals
 - 24hr
-
-### Cyber Categories
-
-- Create a solution to security risks in AI.
-  - Data Poisoning
-  - AI Hacker Detector
-  - Social Engineering
-- Vuln Devl
-  - Try to break a computer as much as you can
 
 ### Web Dev Categories
 
@@ -22,9 +38,56 @@
   - CPP scheduler
   - Website that lists places where students can eat on campus
   - 10 min presentation on technology and why users would like it
--
+    
+## Getting Started
+
+This is an example of how you may give instructions on setting up your project locally.
+To get a local copy up and running follow these simple example steps.
+
+### Prerequisites
+
+Installation of npm and node is required!
+* npm
+  ```sh
+  npm install npm@latest -g
+  ```
+
+### Installation
+
+1. Get a free Database Key at MongoDB
+2. Clone the repo
+   ```sh
+   git clone https://github.com/andresr35/broncoHacks.git
+   ```
+3. Install NPM packages on both the client and server folder
+   ```sh
+   npm install
+   ```
+4. Enter your mongoDB Key and JWT secret key in `.env`
+   ```js
+   MONGODB = 'ENTER YOUR key';
+   ```
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+
+### Tech stack
+
+This uses React in the front end, with an express and node backend. The database being used is a MongoDB database, being connected with Mongoose. Bcryptjs is also being used in conjunction with JWT tokens to provide authentication to users when they log in.
+
+<!-- LICENSE -->
+## License
+
+Distributed under the MIT License. See `LICENSE.txt` for more information.
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 ## Dev Resources
 
 [Canvas Api](https://canvas.instructure.com/doc/api/index.html)
 [Axios API](https://axios-http.com/docs/api_intro)
+
+[contributors-shield]: https://img.shields.io/github/contributors/github_username/repo_name.svg?style=for-the-badge
+[contributors-url]: https://github.com/Andresr35/broncoHacks/graphs/contributors
+[license-url]: https://github.com/Andresr35/broncoHacks/blob/master/LICENSE.txt
+[license-shield]: https://img.shields.io/github/license/github_username/repo_name.svg?style=for-the-badge
