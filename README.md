@@ -87,7 +87,7 @@ Distributed under the MIT License. See `LICENSE.txt` for more information.
 [Canvas Api](https://canvas.instructure.com/doc/api/index.html)
 [Axios API](https://axios-http.com/docs/api_intro)
 
-[contributors-shield]: https://img.shields.io/github/contributors/github_username/repo_name.svg?style=for-the-badge
+[contributors-shield]: https://img.shields.io/github/contributors/Andresr35/broncoHacks.svg?style=for-the-badge
 [contributors-url]: https://github.com/Andresr35/broncoHacks/graphs/contributors
 [license-url]: https://github.com/Andresr35/broncoHacks/blob/main/LICENSE
-[license-shield]: https://img.shields.io/github/license/github_username/repo_name.svg?style=for-the-badge
+[license-shield]: https://img.shields.io/github/license/Andresr35/broncoHacks.svg?style=for-the-badge
