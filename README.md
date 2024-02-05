@@ -13,7 +13,9 @@
 <h3 align="center">Bronco Life</h3>
 
   <p align="center">
-    project_description
+    Full Stack MERN social media site for Cal Poly Pomona students meant to bring the commuter life more together! Also meant to work in conjunction with Canvas API to
+     centralize the multiple apps CPP has for students. This app helps our students rate professors, give their experience on classes, create study groups, and invite commuters to off-
+    campus study options. 
     <br />
     <a href="https://github.com/Andresr35/broncoHacks">View Demo</a>
     ·
